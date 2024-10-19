@@ -1,0 +1,57 @@
+[remap]
+
+importer="scene"
+importer_version=1
+type="PackedScene"
+uid="uid://dcqiltjyq5781"
+path="res://.godot/imported/sample_track.blend-1a8db03c5ce2640b9348bd77d79ecf5b.scn"
+
+[deps]
+
+source_file="res://Mods/Tracks/sample_track/sample_track.blend"
+dest_files=["res://.godot/imported/sample_track.blend-1a8db03c5ce2640b9348bd77d79ecf5b.scn"]
+
+[params]
+
+nodes/root_type=""
+nodes/root_name=""
+nodes/apply_root_scale=true
+nodes/root_scale=1.0
+meshes/ensure_tangents=false
+meshes/generate_lods=false
+meshes/create_shadow_meshes=false
+meshes/light_baking=1
+meshes/lightmap_texel_size=0.2
+meshes/force_disable_compression=true
+skins/use_named_skins=false
+animation/import=false
+animation/fps=30
+animation/trimming=false
+animation/remove_immutable_tracks=true
+import_script/path=""
+_subresources={
+"materials": {
+"track_diffuse": {
+"use_external/enabled": true,
+"use_external/path": "res://Mods/Tracks/sample_track/sample_track_diffuse.tres"
+}
+}
+}
+gltf/naming_version=1
+gltf/embedded_image_handling=1
+blender/nodes/visible=0
+blender/nodes/punctual_lights=false
+blender/nodes/cameras=false
+blender/nodes/custom_properties=false
+blender/nodes/modifiers=1
+blender/meshes/colors=true
+blender/meshes/uvs=true
+blender/meshes/normals=true
+blender/meshes/tangents=true
+blender/meshes/skins=2
+blender/meshes/export_bones_deforming_mesh_only=false
+blender/materials/unpack_enabled=true
+blender/materials/export_materials=1
+blender/animation/limit_playback=true
+blender/animation/always_sample=true
+blender/animation/group_tracks=true

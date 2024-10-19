@@ -1,0 +1,24 @@
+[gd_scene load_steps=4 format=3 uid="uid://c7d7wtb3lm6hn"]
+
+[ext_resource type="Material" uid="uid://ckwfhjdf4ro8e" path="res://Mods/Placeholders/Materials/red.tres" id="1_6vehr"]
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_eo2p8"]
+top_radius = 0.3
+bottom_radius = 0.3
+height = 1.8
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_w6rwy"]
+top_radius = 0.0
+height = 0.79
+
+[node name="CarSpawn" type="Marker3D"]
+
+[node name="arrow_tail" type="MeshInstance3D" parent="."]
+transform = Transform3D(-5.73206e-15, 1.31134e-07, 1, -1, -4.37114e-08, 0, 4.37114e-08, -1, 1.31134e-07, -5.37213e-08, 0, 0.368434)
+material_override = ExtResource("1_6vehr")
+mesh = SubResource("CylinderMesh_eo2p8")
+
+[node name="arrow_head" type="MeshInstance3D" parent="."]
+transform = Transform3D(-5.73206e-15, 1.31134e-07, 1, -1, -4.37114e-08, 0, 4.37114e-08, -1, 1.31134e-07, 5.37213e-08, 0, -0.860566)
+material_override = ExtResource("1_6vehr")
+mesh = SubResource("CylinderMesh_w6rwy")

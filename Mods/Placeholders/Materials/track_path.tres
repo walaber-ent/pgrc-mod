@@ -1,0 +1,8 @@
+[gd_resource type="StandardMaterial3D" load_steps=2 format=3 uid="uid://budvf3w2bjk2w"]
+
+[ext_resource type="Texture2D" uid="uid://dl872smm8qmld" path="res://Mods/Placeholders/Textures/mod_track_path.png" id="1_eqtkl"]
+
+[resource]
+albedo_texture = ExtResource("1_eqtkl")
+uv1_scale = Vector3(40, 4, 1)
+texture_filter = 0

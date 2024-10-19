@@ -1,0 +1,124 @@
+[gd_scene load_steps=15 format=3 uid="uid://b2n4oo04jux0t"]
+
+[ext_resource type="Script" path="res://Mods/Scripts/ModTrack.gd" id="1_seqqr"]
+[ext_resource type="PackedScene" uid="uid://c7d7wtb3lm6hn" path="res://Mods/Placeholders/mod_car_spawn.tscn" id="2_05dne"]
+[ext_resource type="PackedScene" uid="uid://btshuvgc5p0v0" path="res://Mods/Placeholders/mod_checkpoint.tscn" id="3_7qbpy"]
+[ext_resource type="Script" path="res://Mods/Scripts/ModTrackPath.gd" id="4_h316e"]
+[ext_resource type="Material" uid="uid://budvf3w2bjk2w" path="res://Mods/Placeholders/Materials/track_path.tres" id="5_6qukl"]
+[ext_resource type="PackedScene" uid="uid://cu0mwqn0aqh5x" path="res://Mods/Placeholders/mod_track_path_point.tscn" id="6_bv4sn"]
+[ext_resource type="PackedScene" uid="uid://dcqiltjyq5781" path="res://Mods/Tracks/sample_track/sample_track.blend" id="7_qrp0a"]
+[ext_resource type="PackedScene" uid="uid://cvsxe56hnxaa0" path="res://Mods/Placeholders/mod_trigger.tscn" id="8_nfmkb"]
+[ext_resource type="PackedScene" uid="uid://b80ls8gu1xpos" path="res://Mods/Placeholders/mod_spectator_car.tscn" id="9_rp1cy"]
+[ext_resource type="Script" path="res://Mods/Scripts/ModReverbTrigger.gd" id="10_nn3ty"]
+
+[sub_resource type="ImmediateMesh" id="ImmediateMesh_scyu8"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_xad5w"]
+size = Vector3(150, 2, 150)
+
+[sub_resource type="BoxMesh" id="BoxMesh_4jyu1"]
+size = Vector3(50, 10, 5)
+
+[sub_resource type="BoxMesh" id="BoxMesh_kyg42"]
+size = Vector3(8, 8, 8)
+
+[node name="TrackWalaberTest" type="Node3D"]
+script = ExtResource("1_seqqr")
+
+[node name="CarSpawn" parent="." instance=ExtResource("2_05dne")]
+unique_name_in_owner = true
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -8, 0.678065, -2)
+
+[node name="Checkpoints" type="Node3D" parent="."]
+unique_name_in_owner = true
+
+[node name="checkpoint" parent="Checkpoints" instance=ExtResource("3_7qbpy")]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -5, 0, 3)
+size = Vector2(6, 5)
+
+[node name="checkpoint2" parent="Checkpoints" instance=ExtResource("3_7qbpy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 0, -3)
+size = Vector2(6, 5)
+
+[node name="TrackPath" type="MeshInstance3D" parent="."]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.14903, 0)
+mesh = SubResource("ImmediateMesh_scyu8")
+script = ExtResource("4_h316e")
+material = ExtResource("5_6qukl")
+bezier_handle_length = 2.5
+vert_spacing = 1.0
+
+[node name="track_path_point" parent="TrackPath" instance=ExtResource("6_bv4sn")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 0, 3)
+
+[node name="track_path_point2" parent="TrackPath" instance=ExtResource("6_bv4sn")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -3, 0, 8)
+
+[node name="track_path_point3" parent="TrackPath" instance=ExtResource("6_bv4sn")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 3, 0, 8)
+
+[node name="track_path_point4" parent="TrackPath" instance=ExtResource("6_bv4sn")]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 8, 0, 3)
+
+[node name="track_path_point5" parent="TrackPath" instance=ExtResource("6_bv4sn")]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 8, 0, -3)
+
+[node name="track_path_point6" parent="TrackPath" instance=ExtResource("6_bv4sn")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 3, 0, -8)
+
+[node name="track_path_point7" parent="TrackPath" instance=ExtResource("6_bv4sn")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -3, 0, -8)
+
+[node name="track_path_point8" parent="TrackPath" instance=ExtResource("6_bv4sn")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 0, -3)
+
+[node name="track_path_point9" parent="TrackPath" instance=ExtResource("6_bv4sn")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 0, 3)
+
+[node name="track" parent="." instance=ExtResource("7_qrp0a")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12, 0, -12)
+
+[node name="OutOfBounds" type="Node3D" parent="."]
+unique_name_in_owner = true
+
+[node name="trigger" parent="OutOfBounds" instance=ExtResource("8_nfmkb")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -3, 0)
+mesh = SubResource("BoxMesh_xad5w")
+size = Vector3(150, 2, 150)
+
+[node name="trigger2" parent="OutOfBounds" instance=ExtResource("8_nfmkb")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, -16)
+mesh = SubResource("BoxMesh_4jyu1")
+size = Vector3(50, 10, 5)
+
+[node name="SpectatorCars" type="Node3D" parent="."]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.12657, 0)
+
+[node name="spectator_car" parent="SpectatorCars" instance=ExtResource("9_rp1cy")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -2, -0.68, 2)
+
+[node name="spectator_car2" parent="SpectatorCars" instance=ExtResource("9_rp1cy")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -2, -0.68, -1.19209e-07)
+
+[node name="spectator_car3" parent="SpectatorCars" instance=ExtResource("9_rp1cy")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -2, -0.68, -2)
+
+[node name="spectator_car4" parent="SpectatorCars" instance=ExtResource("9_rp1cy")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 2, -0.68, -2)
+
+[node name="spectator_car5" parent="SpectatorCars" instance=ExtResource("9_rp1cy")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 2, -0.68, -2.38419e-07)
+
+[node name="spectator_car6" parent="SpectatorCars" instance=ExtResource("9_rp1cy")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 2, -0.68, 2)
+
+[node name="ReverbTrigger" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 3, -8)
+script = ExtResource("10_nn3ty")
+reverb_strength = 0.8
+
+[node name="trigger" parent="ReverbTrigger" instance=ExtResource("8_nfmkb")]
+mesh = SubResource("BoxMesh_kyg42")
+size = Vector3(8, 8, 8)

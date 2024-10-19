@@ -1,0 +1,66 @@
+; Engine configuration file.
+; It's best edited using the editor UI and not directly,
+; since the parameters that go here are not all obvious.
+;
+; Format:
+;   [section] ; section goes between []
+;   param=value ; assign values to parameters
+
+config_version=5
+
+[application]
+
+config/name="mod_track_test"
+config/features=PackedStringArray("4.2", "Mobile")
+
+[layer_names]
+
+3d_render/layer_1="Ground"
+3d_render/layer_2="Car"
+3d_render/layer_12="SplitScreenPlayer1"
+3d_render/layer_13="SplitScreenPlayer2"
+3d_render/layer_14="SplitScreenPlayer3"
+3d_render/layer_15="SplitScreenPlayer4"
+3d_render/layer_16="MultiplayerMenu"
+3d_render/layer_17="GameViewEffect"
+3d_render/layer_18="IntroCameraContent"
+3d_render/layer_19="UITrophy"
+3d_render/layer_20="Map"
+3d_physics/layer_1="Ground"
+3d_physics/layer_2="Car"
+3d_physics/layer_3="OutOfBounds"
+3d_physics/layer_4="CarTriggers"
+3d_physics/layer_5="PaintGlob"
+3d_physics/layer_6="Dirt"
+3d_physics/layer_7="TireRayOnly"
+3d_physics/layer_8="Grass"
+3d_physics/layer_9="DeepSnow"
+3d_physics/layer_10="LightSnow"
+3d_physics/layer_11="Roof"
+
+[rendering]
+
+renderer/rendering_method="mobile"
+
+[shader_globals]
+
+LIGHT_DIR={
+"type": "vec3",
+"value": Vector3(0, -1, 0)
+}
+CULL_DIST_BIAS={
+"type": "float",
+"value": 0.0
+}
+OVERALL_GAMMA={
+"type": "float",
+"value": 1.0
+}
+CULL_DIST_NEAR={
+"type": "vec2",
+"value": Vector2(0, 0)
+}
+CULL_DIST_FAR={
+"type": "vec2",
+"value": Vector2(0, 0)
+}

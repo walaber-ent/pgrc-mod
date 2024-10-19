@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://cu0mwqn0aqh5x"]
+
+[ext_resource type="Script" path="res://Mods/Scripts/ModTrackPathPoint.gd" id="1_lbkp5"]
+
+[node name="track_path_point" type="Node3D"]
+script = ExtResource("1_lbkp5")

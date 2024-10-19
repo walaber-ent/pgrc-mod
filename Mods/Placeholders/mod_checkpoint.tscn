@@ -1,0 +1,65 @@
+[gd_scene load_steps=9 format=3 uid="uid://btshuvgc5p0v0"]
+
+[ext_resource type="Script" path="res://Mods/Scripts/ModCheckpoint.gd" id="1_0rfyc"]
+[ext_resource type="Material" uid="uid://dqsprltnt445e" path="res://Mods/Placeholders/Materials/blue.tres" id="2_m15us"]
+[ext_resource type="Material" uid="uid://ckwfhjdf4ro8e" path="res://Mods/Placeholders/Materials/red.tres" id="3_ffaqe"]
+[ext_resource type="Material" uid="uid://kdw7get8yfj7" path="res://Mods/Placeholders/Materials/trigger.tres" id="3_fk317"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_6l02e"]
+height = 3.0
+
+[sub_resource type="BoxMesh" id="BoxMesh_6srdq"]
+size = Vector3(5, 2, 0.2)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_if5q3"]
+top_radius = 0.1
+bottom_radius = 0.1
+height = 1.0
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_gq83d"]
+top_radius = 0.0
+bottom_radius = 0.2
+height = 0.4
+
+[node name="checkpoint" type="Node3D"]
+script = ExtResource("1_0rfyc")
+size = Vector2(4.375, 5.07)
+
+[node name="buoy_L" type="Node3D" parent="."]
+unique_name_in_owner = true
+
+[node name="mesh" type="MeshInstance3D" parent="buoy_L"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
+material_override = ExtResource("2_m15us")
+mesh = SubResource("CapsuleMesh_6l02e")
+skeleton = NodePath("../..")
+
+[node name="buoy_R" type="Node3D" parent="."]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.375, 0, 0)
+
+[node name="mesh" type="MeshInstance3D" parent="buoy_R"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
+material_override = ExtResource("2_m15us")
+mesh = SubResource("CapsuleMesh_6l02e")
+skeleton = NodePath("../..")
+
+[node name="trigger" type="MeshInstance3D" parent="."]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.00716, 1.69057, 0)
+material_override = ExtResource("3_fk317")
+mesh = SubResource("BoxMesh_6srdq")
+
+[node name="reset_pos" type="Node3D" parent="."]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.76991, 0, 0.433028)
+
+[node name="arrow_tail" type="MeshInstance3D" parent="reset_pos"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0)
+material_override = ExtResource("3_ffaqe")
+mesh = SubResource("CylinderMesh_if5q3")
+
+[node name="arrow_head" type="MeshInstance3D" parent="reset_pos"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, -0.575875)
+material_override = ExtResource("3_ffaqe")
+mesh = SubResource("CylinderMesh_gq83d")
