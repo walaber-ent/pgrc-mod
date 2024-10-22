@@ -64,3 +64,11 @@ CULL_DIST_FAR={
 "type": "vec2",
 "value": Vector2(0, 0)
 }
+JITTER={
+"type": "float",
+"value": 0.667
+}
+JITTER_RESOLUTION={
+"type": "vec2",
+"value": Vector2(320, 240)
+}

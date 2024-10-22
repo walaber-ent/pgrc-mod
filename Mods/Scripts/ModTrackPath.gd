@@ -21,6 +21,7 @@ class_name ModTrackPath
 		refresh_mesh()
 
 var _mesh : ImmediateMesh
+var _curve : Curve3D
 
 func _ready() -> void:
 	refresh_mesh()
@@ -29,13 +30,20 @@ func _notification(what: int) -> void:
 	if what == NOTIFICATION_CHILD_ORDER_CHANGED:
 		refresh_mesh()
 
+func get_track_curve() -> Curve3D:
+	return _curve
+
 
 func refresh_mesh() -> void:
 	if _mesh == null:
 		_mesh = ImmediateMesh.new()
 		mesh = _mesh
 		
-	var curve : Curve3D = Curve3D.new()
+	if _curve == null:
+		_curve = Curve3D.new()
+	else:
+		_curve.clear_points()
+		
 	var hl : float = maxf(bezier_handle_length, 0.0)
 	
 	for i in range(get_child_count()):
@@ -49,11 +57,11 @@ func refresh_mesh() -> void:
 			if i < get_child_count()-1:
 				next_dir = ((get_child(i+1) as Node3D).position - t.position).normalized()
 				
-			curve.add_point(t.position,t.basis * Vector3(0.0, 0.0, -hl), t.basis * Vector3(0.0, 0.0, hl))
+			_curve.add_point(t.position,t.basis * Vector3(0.0, 0.0, -hl), t.basis * Vector3(0.0, 0.0, hl))
 	
-	curve.bake_interval = 0.05
+	_curve.bake_interval = 0.05
 	
-	var length : float = curve.get_baked_length()
+	var length : float = _curve.get_baked_length()
 	var pt_count : int = ceili(length / maxf(vert_spacing, 0.25))
 	
 	var final_spacing : float = length / pt_count
@@ -63,7 +71,7 @@ func refresh_mesh() -> void:
 	
 	var d : float = 0.0
 	for i in range(pt_count):
-		var pt_t : Transform3D = curve.sample_baked_with_rotation(d, false, false)
+		var pt_t : Transform3D = _curve.sample_baked_with_rotation(d, false, false)
 		var pt : Vector3 = pt_t.origin
 		var right : Vector3 = pt_t.basis * Vector3.RIGHT
 		right.y = 0.0
@@ -73,7 +81,7 @@ func refresh_mesh() -> void:
 		
 		# last point special logic
 		if i == pt_count-1:
-			pt_t = curve.sample_baked_with_rotation(0.0, false, false)
+			pt_t = _curve.sample_baked_with_rotation(0.0, false, false)
 			pt = pt_t.origin
 			right = pt_t.basis * Vector3.RIGHT
 			right.y = 0.0

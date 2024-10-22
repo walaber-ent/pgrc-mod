@@ -11,15 +11,14 @@ uniform float affine_effect_reduction : hint_range(0,10) = 1.0;
 uniform sampler2D main_texture : source_color, filter_nearest;
 uniform vec4 albedo_color : source_color = vec4(1.0);
 uniform float texture_color_factor : hint_range(0,1) = 1.0;
-uniform float alpha_scissor : hint_range(0, 1) = 0.5;
-uniform float jitter: hint_range(0, 1) = 0.4;
-uniform ivec2 resolution = ivec2(320, 240);
 uniform bool billboard = false;
 uniform bool full_billboard = false;
 uniform int albedo_steps = 64;
 uniform float billboard_roll = 0.0;
 uniform vec3 billboard_scale = vec3(1.0, 1.0, 1.0);
 
+global uniform float JITTER;
+global uniform vec2 JITTER_RESOLUTION;
 global uniform float OVERALL_GAMMA;
 
 vec4 snap_to_position(vec4 base_position)
@@ -27,7 +26,7 @@ vec4 snap_to_position(vec4 base_position)
 	vec4 snapped_position = base_position;
 	snapped_position.xyz = base_position.xyz / base_position.w;
 	
-	vec2 snap_resulotion = floor(vec2(resolution) * (1.0 - jitter));
+	vec2 snap_resulotion = floor(vec2(JITTER_RESOLUTION) * (1.0 - JITTER));
 	snapped_position.x = floor(snap_resulotion.x * snapped_position.x) / snap_resulotion.x;
 	snapped_position.y = floor(snap_resulotion.y * snapped_position.y) / snap_resulotion.y;
 	
@@ -99,5 +98,5 @@ void fragment()
 	ALBEDO = round(ALBEDO * float(albedo_steps)) / float(albedo_steps);
 	ALBEDO = pow(ALBEDO, vec3(OVERALL_GAMMA));
 	ALPHA = alpha;
-	ALPHA_SCISSOR_THRESHOLD = alpha_scissor;
+	ALPHA_SCISSOR_THRESHOLD = 0.5;
 }
