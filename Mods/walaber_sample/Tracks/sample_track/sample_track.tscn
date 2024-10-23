@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=3 uid="uid://b2n4oo04jux0t"]
+[gd_scene load_steps=23 format=3 uid="uid://b2n4oo04jux0t"]
 
 [ext_resource type="Script" path="res://Mods/Scripts/ModTrack.gd" id="1_seqqr"]
 [ext_resource type="PackedScene" uid="uid://c7d7wtb3lm6hn" path="res://Mods/Placeholders/mod_car_spawn.tscn" id="2_05dne"]
@@ -8,14 +8,12 @@
 [ext_resource type="Script" path="res://Mods/Scripts/ModTrackPath.gd" id="4_h316e"]
 [ext_resource type="Material" uid="uid://budvf3w2bjk2w" path="res://Mods/Placeholders/Materials/track_path.tres" id="5_6qukl"]
 [ext_resource type="PackedScene" uid="uid://cu0mwqn0aqh5x" path="res://Mods/Placeholders/mod_track_path_point.tscn" id="6_bv4sn"]
-[ext_resource type="PackedScene" uid="uid://dcqiltjyq5781" path="res://Mods/Tracks/sample_track/sample_track.blend" id="7_qrp0a"]
+[ext_resource type="PackedScene" uid="uid://dcqiltjyq5781" path="res://Mods/walaber_sample/Tracks/sample_track/sample_track.blend" id="7_qrp0a"]
 [ext_resource type="PackedScene" uid="uid://cvsxe56hnxaa0" path="res://Mods/Placeholders/mod_trigger.tscn" id="8_nfmkb"]
 [ext_resource type="PackedScene" uid="uid://b80ls8gu1xpos" path="res://Mods/Placeholders/mod_spectator_car.tscn" id="9_rp1cy"]
 [ext_resource type="Script" path="res://Mods/Scripts/ModReverbTrigger.gd" id="10_nn3ty"]
 [ext_resource type="Script" path="res://Mods/Scripts/ModTrackCamera.gd" id="12_oeimf"]
-[ext_resource type="Script" path="res://Mods/Scripts/ModTrackCameraPreviewer.gd" id="13_8m8cw"]
-[ext_resource type="PackedScene" uid="uid://udvcnvjy6jlm" path="res://Mods/Placeholders/Models/spectator_car_proxy.glb" id="14_1gymh"]
-[ext_resource type="Shader" path="res://Shaders/saturn_unlit_dither.gdshader" id="15_jfqyy"]
+[ext_resource type="PackedScene" uid="uid://dqqrq7ntnw2j8" path="res://Mods/Placeholders/mod_track_camera_previewer.tscn" id="13_fxgoo"]
 
 [sub_resource type="Resource" id="Resource_5y32m"]
 script = ExtResource("3_2napl")
@@ -37,26 +35,16 @@ script = ExtResource("3_2napl")
 car_class = "cheat"
 laps = 2
 
-[sub_resource type="ImmediateMesh" id="ImmediateMesh_l2cy4"]
+[sub_resource type="ImmediateMesh" id="ImmediateMesh_nyqwl"]
 
-[sub_resource type="BoxMesh" id="BoxMesh_l5bai"]
+[sub_resource type="BoxMesh" id="BoxMesh_dsayt"]
 size = Vector3(150, 2, 150)
 
-[sub_resource type="BoxMesh" id="BoxMesh_nteeq"]
+[sub_resource type="BoxMesh" id="BoxMesh_yntde"]
 size = Vector3(50, 10, 5)
 
-[sub_resource type="BoxMesh" id="BoxMesh_o6m6y"]
+[sub_resource type="BoxMesh" id="BoxMesh_nunx1"]
 size = Vector3(8, 8, 8)
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_524eo"]
-render_priority = 0
-shader = ExtResource("15_jfqyy")
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_8b5ga"]
-shading_mode = 0
-albedo_color = Color(1, 0, 0, 1)
-
-[sub_resource type="ImmediateMesh" id="ImmediateMesh_qhby0"]
 
 [node name="TrackWalaberTest" type="Node3D"]
 script = ExtResource("1_seqqr")
@@ -84,7 +72,7 @@ size = Vector2(6, 5)
 [node name="TrackPath" type="MeshInstance3D" parent="."]
 unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.14903, 0)
-mesh = SubResource("ImmediateMesh_l2cy4")
+mesh = SubResource("ImmediateMesh_nyqwl")
 script = ExtResource("4_h316e")
 material = ExtResource("5_6qukl")
 bezier_handle_length = 2.5
@@ -122,12 +110,12 @@ unique_name_in_owner = true
 
 [node name="trigger" parent="OutOfBounds" instance=ExtResource("8_nfmkb")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -3, 0)
-mesh = SubResource("BoxMesh_l5bai")
+mesh = SubResource("BoxMesh_dsayt")
 size = Vector3(150, 2, 150)
 
 [node name="trigger2" parent="OutOfBounds" instance=ExtResource("8_nfmkb")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, -16)
-mesh = SubResource("BoxMesh_nteeq")
+mesh = SubResource("BoxMesh_yntde")
 size = Vector3(50, 10, 5)
 
 [node name="SpectatorCars" type="Node3D" parent="."]
@@ -158,7 +146,7 @@ script = ExtResource("10_nn3ty")
 reverb_strength = 0.8
 
 [node name="trigger" parent="ReverbTrigger" instance=ExtResource("8_nfmkb")]
-mesh = SubResource("BoxMesh_o6m6y")
+mesh = SubResource("BoxMesh_nunx1")
 size = Vector3(8, 8, 8)
 
 [node name="TrackCameras" type="Node3D" parent="."]
@@ -176,31 +164,15 @@ fov = 50.0
 starting_track_interp = 0.21
 
 [node name="track_camera3" type="Node3D" parent="TrackCameras"]
-transform = Transform3D(0.801231, 0.247699, -0.544679, 0, 0.910292, 0.413966, 0.598356, -0.331682, 0.729354, -0.0289516, 3.87171, 2.82215)
+transform = Transform3D(0.801231, 0.247699, -0.544679, 0, 0.910292, 0.413966, 0.598356, -0.331682, 0.729354, 0.229327, 5.04324, 2.82215)
 script = ExtResource("12_oeimf")
-fov = 60.0
+fov = 60.095
 base_dist = 8.0
 starting_track_interp = 0.452
 
-[node name="TrackCameraPreviewer" type="Node3D" parent="."]
-script = ExtResource("13_8m8cw")
-
-[node name="car_proxy" parent="TrackCameraPreviewer" instance=ExtResource("14_1gymh")]
+[node name="TrackCameraPreviewer" parent="." instance=ExtResource("13_fxgoo")]
 unique_name_in_owner = true
-transform = Transform3D(1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, 1, -8, 0.14903, 3)
-
-[node name="Spectator4" parent="TrackCameraPreviewer/car_proxy" index="0"]
-surface_material_override/0 = SubResource("ShaderMaterial_524eo")
-
-[node name="cam_preview" type="MeshInstance3D" parent="TrackCameraPreviewer"]
-unique_name_in_owner = true
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.0431, -1.68419, -11)
-visible = false
-material_override = SubResource("StandardMaterial3D_8b5ga")
-mesh = SubResource("ImmediateMesh_qhby0")
-skeleton = NodePath("../..")
+preview_car_interp = 0.857
 
 [node name="track" parent="." instance=ExtResource("7_qrp0a")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12, 0, -12)
-
-[editable path="TrackCameraPreviewer/car_proxy"]

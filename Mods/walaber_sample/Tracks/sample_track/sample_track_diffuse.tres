@@ -1,11 +1,11 @@
 [gd_resource type="ShaderMaterial" load_steps=3 format=3 uid="uid://3g3wmcrspnk4"]
 
-[ext_resource type="Shader" path="res://Shaders/saturn_lit.gdshader" id="1_5r7kq"]
-[ext_resource type="Texture2D" uid="uid://bi8rlw32d7fxj" path="res://Textures/cement.png" id="2_ix1bo"]
+[ext_resource type="Shader" path="res://Shaders/saturn_lit.gdshader" id="1_jby1b"]
+[ext_resource type="Texture2D" uid="uid://bi8rlw32d7fxj" path="res://Textures/cement.png" id="2_veqy7"]
 
 [resource]
 render_priority = 0
-shader = ExtResource("1_5r7kq")
+shader = ExtResource("1_jby1b")
 shader_parameter/affine_mapping = true
 shader_parameter/affine_effect_reduction = 8.0
 shader_parameter/albedo_color = Color(1, 1, 1, 1)
@@ -25,4 +25,4 @@ shader_parameter/cull_pop_factor = 0.0
 shader_parameter/dir_light_contrib_range = Vector2(0.3, 1)
 shader_parameter/grid_culling = false
 shader_parameter/grid_size = 8.0
-shader_parameter/main_texture = ExtResource("2_ix1bo")
+shader_parameter/main_texture = ExtResource("2_veqy7")

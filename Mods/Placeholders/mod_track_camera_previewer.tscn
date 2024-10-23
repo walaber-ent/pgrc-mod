@@ -1,0 +1,43 @@
+[gd_scene load_steps=7 format=3 uid="uid://dqqrq7ntnw2j8"]
+
+[ext_resource type="Script" path="res://Mods/Scripts/ModTrackCameraPreviewer.gd" id="1_esmbx"]
+[ext_resource type="PackedScene" uid="uid://udvcnvjy6jlm" path="res://Mods/Placeholders/Models/spectator_car_proxy.glb" id="2_vtkjf"]
+[ext_resource type="Shader" path="res://Shaders/saturn_unlit_dither.gdshader" id="3_waxep"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_524eo"]
+render_priority = 0
+shader = ExtResource("3_waxep")
+shader_parameter/affine_mapping = true
+shader_parameter/affine_effect_reduction = 1.0
+shader_parameter/albedo_color = Color(0, 0, 0, 0.721569)
+shader_parameter/texture_color_factor = 1.0
+shader_parameter/billboard = false
+shader_parameter/full_billboard = false
+shader_parameter/albedo_steps = 64
+shader_parameter/billboard_roll = 0.0
+shader_parameter/billboard_scale = Vector3(1, 1, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_8b5ga"]
+shading_mode = 0
+albedo_color = Color(0.917647, 0, 0, 1)
+
+[sub_resource type="ImmediateMesh" id="ImmediateMesh_02cbi"]
+
+[node name="TrackCameraPreviewer" type="Node3D"]
+script = ExtResource("1_esmbx")
+
+[node name="car_proxy" parent="." instance=ExtResource("2_vtkjf")]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, 1, -8, 0.14903, 3)
+
+[node name="Spectator4" parent="car_proxy" index="0"]
+surface_material_override/0 = SubResource("ShaderMaterial_524eo")
+
+[node name="cam_preview" type="MeshInstance3D" parent="."]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.0431, -1.68419, -11)
+material_override = SubResource("StandardMaterial3D_8b5ga")
+mesh = SubResource("ImmediateMesh_02cbi")
+skeleton = NodePath("../..")
+
+[editable path="car_proxy"]

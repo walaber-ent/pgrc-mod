@@ -18,6 +18,9 @@ func _ready() -> void:
 	cam_preview.hide()
 	
 func refresh_now() -> void:
+	if not is_inside_tree():
+		return
+		
 	print("refresh now")
 	var track_path : ModTrackPath = get_parent().get_node("TrackPath") as ModTrackPath
 	

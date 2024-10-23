@@ -4,12 +4,12 @@ importer="scene"
 importer_version=1
 type="PackedScene"
 uid="uid://dcqiltjyq5781"
-path="res://.godot/imported/sample_track.blend-1a8db03c5ce2640b9348bd77d79ecf5b.scn"
+path="res://.godot/imported/sample_track.blend-2cfd5a93a60640b6d0f47994352adc05.scn"
 
 [deps]
 
-source_file="res://Mods/Tracks/sample_track/sample_track.blend"
-dest_files=["res://.godot/imported/sample_track.blend-1a8db03c5ce2640b9348bd77d79ecf5b.scn"]
+source_file="res://Mods/walaber_sample/Tracks/sample_track/sample_track.blend"
+dest_files=["res://.godot/imported/sample_track.blend-2cfd5a93a60640b6d0f47994352adc05.scn"]
 
 [params]
 
@@ -33,7 +33,7 @@ _subresources={
 "materials": {
 "track_diffuse": {
 "use_external/enabled": true,
-"use_external/path": "res://Mods/Tracks/sample_track/sample_track_diffuse.tres"
+"use_external/path": "res://Mods/walaber_sample/Tracks/sample_track/sample_track_diffuse.tres"
 }
 }
 }
