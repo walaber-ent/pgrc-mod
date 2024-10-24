@@ -1,0 +1,27 @@
+[gd_scene load_steps=7 format=3 uid="uid://dq2fgy8jxkssy"]
+
+[ext_resource type="PackedScene" uid="uid://cs1t0fkk3fpmi" path="res://Mods/Placeholders/Models/railing-barrier-yellow.glb" id="1_uixxq"]
+[ext_resource type="Script" path="res://Mods/Scripts/ModBarrierRailing.gd" id="1_wuk3c"]
+[ext_resource type="PackedScene" uid="uid://kxc8kppnmhm2" path="res://Mods/Placeholders/Models/railing-barrier-banner-1.glb" id="2_1drgv"]
+[ext_resource type="PackedScene" uid="uid://dths31hsh22rq" path="res://Mods/Placeholders/Models/railing-barrier-banner-2.glb" id="3_jvxvj"]
+[ext_resource type="PackedScene" uid="uid://dacow8vko3cuq" path="res://Mods/Placeholders/Models/railing-barrier-banner-3.glb" id="5_r56k2"]
+[ext_resource type="PackedScene" uid="uid://cfksqpxuri46u" path="res://Mods/Placeholders/Models/railing-barrier-banner-4.glb" id="6_nlqfp"]
+
+[node name="barrier_railing" type="Node3D"]
+transform = Transform3D(-0.5, 0, -0.866025, 0, 1, 0, 0.866025, 0, -0.5, 8.91362, 0, -9.84886)
+script = ExtResource("1_wuk3c")
+
+[node name="railing-barrier-yellow" parent="." instance=ExtResource("1_uixxq")]
+unique_name_in_owner = true
+
+[node name="railing-barrier-banner-1" parent="." instance=ExtResource("2_1drgv")]
+unique_name_in_owner = true
+
+[node name="railing-barrier-banner-2" parent="." instance=ExtResource("3_jvxvj")]
+unique_name_in_owner = true
+
+[node name="railing-barrier-banner-3" parent="." instance=ExtResource("5_r56k2")]
+unique_name_in_owner = true
+
+[node name="railing-barrier-banner-4" parent="." instance=ExtResource("6_nlqfp")]
+unique_name_in_owner = true

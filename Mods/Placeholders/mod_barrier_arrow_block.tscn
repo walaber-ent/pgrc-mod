@@ -1,0 +1,19 @@
+[gd_scene load_steps=5 format=3 uid="uid://cq6m734ruksda"]
+
+[ext_resource type="Script" path="res://Mods/Scripts/ModBarrierArrowBlock.gd" id="1_7fvf7"]
+[ext_resource type="PackedScene" uid="uid://cxmqh8d5hw8m" path="res://Mods/Placeholders/Models/arrow-barrier-one-way.glb" id="2_46iqa"]
+[ext_resource type="PackedScene" uid="uid://dkpym4yunkw4d" path="res://Mods/Placeholders/Models/arrow-barrier-two-way.glb" id="3_7eca2"]
+[ext_resource type="PackedScene" uid="uid://cf3s8wjx2bwc2" path="res://Mods/Placeholders/Models/arrow-barrier-two-way-reversed.glb" id="4_pj18q"]
+
+[node name="barrier_arrow_block" type="Node3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 0, 10)
+script = ExtResource("1_7fvf7")
+
+[node name="arrow-barrier-one-way" parent="." instance=ExtResource("2_46iqa")]
+unique_name_in_owner = true
+
+[node name="arrow-barrier-two-way" parent="." instance=ExtResource("3_7eca2")]
+unique_name_in_owner = true
+
+[node name="arrow-barrier-two-way-reversed" parent="." instance=ExtResource("4_pj18q")]
+unique_name_in_owner = true

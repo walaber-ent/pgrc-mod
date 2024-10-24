@@ -1,0 +1,41 @@
+[remap]
+
+importer="scene"
+importer_version=1
+type="PackedScene"
+uid="uid://dp7e7e4jrfb5o"
+path="res://.godot/imported/sample_track.glb-21c3631ff44a7e5290846a75da2444b4.scn"
+
+[deps]
+
+source_file="res://Mods/walaber_sample/Tracks/sample_track/sample_track.glb"
+dest_files=["res://.godot/imported/sample_track.glb-21c3631ff44a7e5290846a75da2444b4.scn"]
+
+[params]
+
+nodes/root_type=""
+nodes/root_name=""
+nodes/apply_root_scale=true
+nodes/root_scale=1.0
+meshes/ensure_tangents=true
+meshes/generate_lods=true
+meshes/create_shadow_meshes=true
+meshes/light_baking=1
+meshes/lightmap_texel_size=0.2
+meshes/force_disable_compression=false
+skins/use_named_skins=true
+animation/import=true
+animation/fps=30
+animation/trimming=false
+animation/remove_immutable_tracks=true
+import_script/path=""
+_subresources={
+"materials": {
+"track_diffuse": {
+"use_external/enabled": true,
+"use_external/path": "res://Mods/walaber_sample/Tracks/sample_track/sample_track_diffuse.tres"
+}
+}
+}
+gltf/naming_version=1
+gltf/embedded_image_handling=1

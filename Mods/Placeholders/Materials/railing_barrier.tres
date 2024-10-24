@@ -1,0 +1,10 @@
+[gd_resource type="StandardMaterial3D" load_steps=2 format=3 uid="uid://cvrh20yk4m01m"]
+
+[ext_resource type="Texture2D" uid="uid://d4dcnpcr35km8" path="res://Mods/Placeholders/Textures/railing-barrier.png" id="1_33547"]
+
+[resource]
+transparency = 2
+alpha_scissor_threshold = 0.5
+alpha_antialiasing_mode = 0
+albedo_texture = ExtResource("1_33547")
+texture_filter = 0
