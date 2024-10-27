@@ -8,6 +8,7 @@ A Parking Garage Rally Circuit track consists of several parts. Each section bel
 * [Getting started](#getting_started)
 * [Heirarchy of a track scene](#heirarchy)
 * [Creating the track environment / geometry](#track_model)
+* [Sega Saturn" materials and shaders](#saturn_shaders)
 * [Placing the car spawn point](#spawn)
 * [Placing checkpoints](#checkpoints)
 * [Setting the track path / minimap](#track_path)
@@ -16,6 +17,9 @@ A Parking Garage Rally Circuit track consists of several parts. Each section bel
 * [Setting up out-of-bounds areas](#oob)
 * [Setting up reverb areas](#reverb)
 * [Setting up broadcast cameras for replays](#cameras)
+* [Setting lap counts](#lap_counts)
+* [Track skybox](#skybox)
+* [Track preview](#track_preview)
 
 
 ## <a name="getting_started"></a> Getting Started
@@ -43,7 +47,7 @@ res://
        ┗ Tracks
           ┣ [track_1_name]
           ┗ [track_2_name]
-          (...as many track as you want)
+          (...as many tracks as you want)
 ```
 
 Because of the way mods are loaded into the game, it's important to make sure that all of your mod content is placed in a folder with a unique name (that doesn't overlap with any other mods).  You can see this structure in the template project, where the mode name is "walaber_sample", and the single track included in this mod is named "sample_track"
@@ -97,7 +101,10 @@ This is the fun part!  You can create your track to be anything you want!  You c
 
 In general, it would be a good idea to take a look at the Godot documentation for [Importing 3D Scenes](https://docs.godotengine.org/en/4.1/tutorials/assets_pipeline/importing_scenes.html) and get familiar with how to create and import 3D models into Godot.
 
-There are tons of tutorials and reference material online for creating and importing 3D models, so I won't go into much detail here. However, **if you want your level match the "Sega Saturn" look of PGRC** here are a few tips and tricks:
+There are tons of tutorials and reference material online for creating and importing 3D models, so I won't go into much detail here. 
+
+## <a name="saturn_shaders"></a>"Sega Saturn" materials and shaders
+You can use whatever materials, shaders you want in your track!  However, **if you want your level match the "Sega Saturn" look of PGRC** here are a few tips and tricks:
 
 📝Make sure your textures are very low resolution! For example, here is the texture used parking garage in the "Mount Rushmore" track from the game, it's a single 256x256 texture that is carefully re-used and tiled:
 
@@ -122,7 +129,7 @@ The shader has a few parameters that you can adjust:
 ![Shader Parameters](../assets/images/shader-parameters.jpg)
 
 ### Vertex color adjustment parameters:
-all of the environment lighting in PGRC tracks is achieved with **vertex colors**.  Essentially each vertex (point) in the 3D model can be assigne a color, and that color can affect how the texture is colored at that spot in the level.  This is how all of the lighting and shadows are accomplished in the level.  There are several parameters to adjust how the vertex colors are applied in the shader:
+all of the environment lighting in PGRC tracks is achieved with **vertex colors**.  Essentially each vertex (point) in the 3D model can be assigned a color, and that color can affect how the texture is colored at that spot in the level.  This is how all of the lighting and shadows are accomplished in the level.  There are several parameters to adjust how the vertex colors are applied in the shader:
 * **Vert Color Gamma** this is essentially the "exposure" of the vertex colors.  Most tracks use a value between 0.6 and 1.5.
 * **Vert Color Mult** a number to multiply the vertex colors with.  Generally controls the contrast. values < 1 will darken the colors, and values > 1 will increase the contrast of the colors.
 * **Vert Color Gain** a number that is added to the vertex colors. values < 0 will darken, values > 1 will lighten.  Rarely used other than to slightly push the colors brighter or darker.
@@ -143,18 +150,93 @@ By default, the shader will cull an entire object as a whole, based on the dista
 
 
 ## <a name="spawn"></a>Placing the car spawn point
+This part is pretty simple.  In the Scene tab you can see a node called "CarSpawn".  This node decides where the car will spawn at the start of the race, and which direction it will be facing.  You can move and rotate this object however you want.  Generally you will want to place it a short distance behind the first checkpoint (the start/finish line), and slightly above the ground.
+![Car Spawn](../assets/images/car-spawn.jpg)
 
 ## <a name="checkpoints"></a>Placing checkpoints
+Checkpoints are also pretty simple to set up.  In the Scene tab, expand the "Checkpoints" node so you can see it's child nodes.  Each child node is a checkpoint, and they should be placed around the track in order from first child to last child.  In other words, the first checkpoint under "Checkpoints" is the start/finish line, and then each checkpoint after that proceeds around in sequence.
+You can add more checkpoints by duplicating an existing checkpoint, or you can add a checkpoint from the FileSystem tab, the checkpoint scene (prefab) is in `res://Mods/Placeholders/mod_checkpoint.tscn`.
+![Checkpoint Scene](../assets/images/checkpoint-scene.jpg)
+
+Each checkpoint has an orientation, you can see the little red arrow to indicate the "forward" direction players are expected to pass through the checkpoint.  This affects which side has the white arrows on it, and also where the car is placed when they reset to this checkpoint.
+You can adjust the width and height of the checkpoint by changing the "size" values in the inspector.  If this checkpoint is near a big jump, it's a good idea to make the checkpoint Y size tall enough that players jumping through the checkpoint in the air will still trigger it.
+![Checkpoint Details](../assets/images/checkpoint-editing.jpg)
 
 ## <a name="track_path"></a>Setting the track path / minimap
+The track path is a very important object in each track.  Although it is not visible direclty in-game, it is till very important.  You will want to make the track path match the path players will drive through your track as closely as possible.  This is because the track path is used for:
+* Determining if players are "off track" (shows the reset prompt)
+* Determining if players are driving backwards (shows the reset prompt)
+* Determining which players are ahead of other players (in multiplayer)
+* Creating the mini-map object
+* Deciding which [track cameras](#cameras) to activate during replays
+
+Expand the "TrackPath" node in the Scene tab, and you will see that there are a bunch of "track_path_point" child nodes.  The track path becomes a smoothed curve that travels through all of the these child nodes, in order.  select a node and move / rotate it in the 3D view and you will see the track path update in realtime.  You can "trace" the driving patch of your track by duplicating and placing nodes along the route.
+![Track path node](../assets/images/track-path-node.jpg)
+
+Usually you can just duplicate existing nodes to expand your track, but you can also find the "path point" scene (prefab) in `res://Mods/Placeholders/mod_track_path_point.tscn` and drag that into the Scene tab as a child of TrackPath to add a point manually.
+You can adjust some high-level settings about the track path by adjusting parameters on the TrackPath parent node:
+* **Bezier Handle Length** this controls the path smoothing.  A value of 0 has no smoothing (sharp corners between each point), larger values are "smoother".  2.5 is a good starting point for most tracks.
+* **Track Width** width of teh track, this will affect how thick the track looks as a mini-map. 6 is the default used for in-game tracks.
+* **Vert Spacing** how often should the track path be subdivided? smaller numbers are smoother but use more polygons, higer numbers are less smooth but use less polygons.
+
+A few **important notes** about the Track path:
+* The first node needs to be placed right at the first checkpoint (the start of a lap)
+* The final node needs to also be pladed right at the first checkpoint (the end of a lap)
 
 ## <a name="barriers"></a>Placing barriers and guide objects
+If you want your track to use the built-in guide / barrier objects from the game, you can put placeholder objects as children of the "Barriers" node and they will be replaced with the official in-game models.
+There are two types of barriers.  Each type has a special placeholder scene (prefab), and a drop-down to choose the variant of that object:
+
+| Arrow Block |  |
+| ---- | ----------- | 
+| Image | ![Arrow Barrier](../assets/images/arrow-barrier.jpg) |
+| Scene | `res://Mods/Placeholders/mod_barrier_arrow_block.tscn` |
+| Variants | ![Arrow Types](../assets/images/arrow-types.jpg) |
+
+| Railing Barrier |  |
+| ---- | ----------- | 
+| Image | ![Railing Barrier](../assets/images/railing-barrier.jpg) |
+| Scene | `res://Mods/Placeholders/mod_barrier_railing.tscn` |
+| Variants | ![Railing Types](../assets/images/railing-types.jpg) |
 
 ## <a name = "spectator_cars"></a>Placing spectator cars
+Similar to barriers, there is a placeholder object in the template project that will be replaced with the in-game spectator cars (randomized just like the official tracks).  if you place these placeholder scenes (prefabs) as a child of the special "SpectatorCars" node, they will be properly detected and replaced in-game.
+You can duplicate the existing nodes in the template project and place them wherever you want!  It's a good idea to place them slightly above the ground, because they are physics objects, and will fall and "settle" on the ground when the track is started.
+
+![Spectator Car](../assets/images/spectator-car.jpg)
+
+If for some reason you need to find the placeholder scene (prefab) manually, it can be found in `res://Mods/Placeholders/mod_spectator_car.tscn`.
 
 ## <a name="oob"></a>Setting up out-of-bounds areas
+If the player find their way out of the track, it's important to reset them back!  You do this by setting up "out of bounds" areas: when the car enters these areas, it will automatically be reset to the last checkpoint.
+In the Scene tab you will see a special node called "OutOfBounds".  This node can have 1 or more child nodes, each one describing a box shape area that is an out-of-bounds zone.  You can place as many or as few of these as you need for your track design.
+
+At the very least, it's good to have a very large "fall trigger" to catch if players are able to fall out of their map, so they won't fall forever and have to reset manually.
+
+Make sure that you use the "Size" parameter in the inspector to set the size of the trigger instead of scaling the node itself.
+
+![OOB Trigger](../assets/images/oob-trigger.jpg)
 
 ## <a name="reverb"></a>Setting up reverb areas
+Reverb areas are for making the game sounds have more echo when you are in certain areas of the track.  In the in-game tracks, the reverb is increased when you are indoors / areas with ceilings, and there is no reverb when you are outdoors / on the roof of a parking garage.
+
+Reverb areas are essentially the same as out-of-bounds triggers, with 2 differences:
+* On the main "ReverbTrigger" node, you can set the strength of the reverb for *that specific* trigger / area.
+* You can have more than 1 ReverbTrigger in the scene (if you need areas with different reverb settings), whereas you can only have 1 out of bounds area.
+
+There is 1 ReverbTrigger set up in the template project as an example.
 
 ## <a name="cameras"></a>Setting up broadcast cameras for replays
+Although not critical for normal gameplay, it's fun to set up various cameras around your track that will be used in the post-race replays.  Similar to the other topics above, this consists of placing special placeholder scenes (prefabs) as children of the special "TrackCameras" node.
+The position of each child node is the position of that camera, and there are a variety of settings in the Inspector for each camera node that controls how it operates.  These allow you to decide if the camera follows it's target (or is stationary), and how much it zooms in and out, etc.
 
+The order of the nodes is important, they should be in order of proceeding around the track sequentially.  There is an important parameter called *Starting Track Interp* that decides when this camera is active.  This is a value between 0 and 1, and prepresents a percentage of completion around the track.
+
+### Previewing the track cameras
+It can be a bit confusing to know what all those parameters do, so there is a built-in way to preview the cameras in the template project.  Select the "TrackCameraPreviewer" Node and look at the Inspector.  There is a parameter called "Preview Car Interp" with a little slider.  Drag the slider, and a dark preview car will animate around your track path.  As it animates, a red wireframe preview will update showing which camera is active, and how it will frame the action.
+
+## <a name="lap_counts"></a> Setting lap counts
+
+## <a name="skybox"></a>Track skybox
+
+## <a name="track_preview"></a>Track preview
