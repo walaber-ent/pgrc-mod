@@ -20,6 +20,7 @@ A Parking Garage Rally Circuit track consists of several parts. Each section bel
 * [Setting lap counts](#lap_counts)
 * [Track skybox](#skybox)
 * [Track preview](#track_preview)
+* [Exporting and testing](#exporting_and_testing)
 
 
 ## <a name="getting_started"></a> Getting Started
@@ -159,7 +160,7 @@ You can add more checkpoints by duplicating an existing checkpoint, or you can a
 ![Checkpoint Scene](../assets/images/checkpoint-scene.jpg)
 
 Each checkpoint has an orientation, you can see the little red arrow to indicate the "forward" direction players are expected to pass through the checkpoint.  This affects which side has the white arrows on it, and also where the car is placed when they reset to this checkpoint.
-You can adjust the width and height of the checkpoint by changing the "size" values in the inspector.  If this checkpoint is near a big jump, it's a good idea to make the checkpoint Y size tall enough that players jumping through the checkpoint in the air will still trigger it.
+You can adjust the width and height of the checkpoint by changing the **"Size"** values in the inspector.  If this checkpoint is near a big jump, it's a good idea to make the checkpoint Y size tall enough that players jumping through the checkpoint in the air will still trigger it.
 ![Checkpoint Details](../assets/images/checkpoint-editing.jpg)
 
 ## <a name="track_path"></a>Setting the track path / minimap
@@ -213,7 +214,7 @@ In the Scene tab you will see a special node called "OutOfBounds".  This node ca
 
 At the very least, it's good to have a very large "fall trigger" to catch if players are able to fall out of their map, so they won't fall forever and have to reset manually.
 
-Make sure that you use the "Size" parameter in the inspector to set the size of the trigger instead of scaling the node itself.
+Make sure that you use the **"Size"** parameter in the inspector to set the size of the trigger instead of scaling the node itself.
 
 ![OOB Trigger](../assets/images/oob-trigger.jpg)
 
@@ -236,7 +237,99 @@ The order of the nodes is important, they should be in order of proceeding aroun
 It can be a bit confusing to know what all those parameters do, so there is a built-in way to preview the cameras in the template project.  Select the "TrackCameraPreviewer" Node and look at the Inspector.  There is a parameter called "Preview Car Interp" with a little slider.  Drag the slider, and a dark preview car will animate around your track path.  As it animates, a red wireframe preview will update showing which camera is active, and how it will frame the action.
 
 ## <a name="lap_counts"></a> Setting lap counts
+Select the "RaceSettings" special node in the Scene tab and look at the Inspector.  There is a **Per Car Class Settings** parameter which is an array.  Click to expand the array, there should be 4 "ModCarClassSetting" entries in the Array.  Expand these as well.  As you can see, you can set the number of laps for a race for each car class individually.  You can change the lap count for each car class here.  Note that all of the cheat-code cars share the same internal "car class" name of "cheat".
+
+![Settings: Laps](../assets/images/settings-laps.jpg)
 
 ## <a name="skybox"></a>Track skybox
+You have 3 options for the "skybox" (background art of the surrounding environment) in your track.  Select the "RaceSettings" special node in the Scene tab and look at the Inspector.  You will see a drop-down called **"Built In Skybox Style"**.
+
+If you select **"PGRC Existing"**, it means you want to use one of the skybox images from the built-in tracks in the game.  You can enter the track name in the **"PGRC Skybox Name"** field and that skybox will be used for your track.  Here are the internal track names you can use to refer to the track you want:
+
+| Track | Internal Name |
+| ----- | ------------- |
+| Learning Lot | `tut` |
+| Mount Rushmore | `mtrush` |
+| San Francisco | `sanfran` |
+| Seattle Airport | `seattle` |
+| New Orleans Stadium | `neworleans` |
+| Chicago Marina | `chicago` |
+| Minnesota Mega Mall | `mall` |
+| Liberty Island | `liberty` |
+
+By selecting **"Custom Image"** for the **"Built In Skybox Style"** parameter, you can provide your own texture image to be used as the skybox in the game.  Assign the texture into the **"Custom Skybox Texture"** parameter, and optionally adjust the **"Custom Skybox Scale"** and **"Custom Skybox Offset"** to fine-tune how it appears in-game.
+
+Finally, if you don't want any built-in skybox at all, choose **"None"** for the **"Built In Skybox Style"**.  This will just have a neutral grey background when played in-game.  Usually if you are choosing this option, it's because you are creating your own custom skybox mesh, shader, or other content directly in your track project, and don't need the built-in skybox system at all.
+
+
 
 ## <a name="track_preview"></a>Track preview
+*(to be added in the future, a method for making a little preview scene of your track to appear in the track select UI in-game)*
+
+
+## <a name="exporting_and_testing"></a>Exporting and Testing
+In order to test your track, you need to export your project into a Godot "pck" or "zip" file format.
+
+From the **Project** menu, select **Export...**
+
+![Project Export](../assets/images/project-export.jpg)
+
+Then select your platform of choice (if unsure, choose "Windows") and click **"Export PCK/ZIP..."**. 
+
+![Export Dialog](../assets/images/export-dialog.jpg)
+
+ Make sure to save your mod with a file name that matches your mod name (remember when you [renamed the folder](#renaming-folders-important) at the beginning of this process?).  For example if your mod name is `cool_mod`, then you should save the file as `cool_mod.pck` or `cool_mod.zip`.
+
+Finally, it's time to test your track in the game!  At the moment, this involves two steps:
+1. Copy the mod file into the correct folder where you have PGRC installed.
+2. Create or update the "mods.cfg" file in your save game folder for PGRC to notify the game about your mod.
+
+### Copying the file into the correct folder
+You will need to place your mod file into a specific folder where the game is installed on your PC.  To find the game's installed location, find PGRC in your steam library, right-click it, and choose **Manage** and then **Browse Local Files**.
+
+![Steam Local Files](../assets/images/steam-local-files.jpg)
+
+Navigate into the `win` or `linux` folder (depending on your platform), and you should see the Game's executable files.  On Windows it's `garagereally.exe`, on Linux it's `garagerally.x86_64`.  If this is your first time installing a mod, you will need to create a folder called `Mods` inside this folder.  After this step, the folder should look like this (pictured Example is on Windows)
+
+![Mods Folder Example](../assets/images/mod-folder-example.jpg)
+
+Place your mod file inside this `Mods` folder.
+
+### Updating the "mods.cfg" file
+
+Finally, the game needs to know your mod exists!  This might be improved in the future to be automated, but for now the game relies on a `mods.cfg` file in your save data location to know what mods to load when the game starts up.
+
+You can find your save data location in the following location on your computer:
+
+| Platform | Location |
+| -------- | -------- |
+| Windows | `%Appdata%\ParkingGarageRallyCircuit` |
+| Linux | `~/.local/share/ParkingGarageRallyCircuit` |
+
+There should be a bunch of files in this folder that constitute your save data, including your ghost data, settings, etc.  
+
+If you don't already have a `mods.cfg` file in this folder, you need to create one.  The content of the file should look like this:
+
+```
+[mods]
+mods=[
+    {
+        "name":"Display Name For Your Mod",
+        "file":"YOUR_MOD_NAME",
+        "load":true,
+        "tracks":[
+            {
+                "name":"Display Name For Your Track",
+                "file":"YOUR_TRACK_NAME"
+            }
+        ]
+    }
+]
+```
+
+paste this content into a text editor (such as Notepad), and replace `YOUR_MOD_NAME` with your mod name (should match the filename of your mod), and replace `YOUR_TRACK_NAME` with your track name (should match the name you used in the folder for your track in the project).  Note that you don't need to include file extensions here, so if you saved your mod as `cool_mod.pck` it would look like `"file":"cool_mod"`.
+
+OK, try running PGRC and see if your track works!  If the track doesn't appear, or the game crashes, you will want to check the game's log file to look for some output that hints at what is wrong.  you can find the log files for the game in your save data location, in a sub-folder called `logs`. The `godot.log` is always the most recent log from the last time you played the game.  Previous logs will also be in this folder, with a timestamp in the filename to help you realize which one you want to check.  The game tries to log errors and warnings when it encounters errors with mod tracks, and checking the log is the best way to debug what is going on!
+
+### Congratulations and THANK YOU! 🤩
+If you made it this far, YOU ARE AMAZING!  I can't wait to see what you create!  If you haven't already, consider [joining the Walaber discord](https://discord.gg/walaber) and sharing your creation with other players!
