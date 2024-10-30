@@ -1,0 +1,100 @@
+[gd_resource type="AudioBusLayout" load_steps=10 format=3 uid="uid://byg256c4nopuq"]
+
+[sub_resource type="AudioEffectLimiter" id="AudioEffectLimiter_3cws8"]
+resource_name = "Limiter"
+ceiling_db = -0.5
+threshold_db = -0.4
+
+[sub_resource type="AudioEffectEQ" id="AudioEffectEQ_cr0i0"]
+resource_name = "EQ"
+band_db/32_hz = -38.8
+band_db/100_hz = -15.3
+band_db/320_hz = -6.2
+band_db/1000_hz = -30.4
+band_db/3200_hz = -40.3
+band_db/10000_hz = -52.8
+
+[sub_resource type="AudioEffectAmplify" id="AudioEffectAmplify_gt3nx"]
+resource_name = "Amplify"
+volume_db = -3.0
+
+[sub_resource type="AudioEffectCompressor" id="AudioEffectCompressor_mbo36"]
+resource_name = "Compressor"
+
+[sub_resource type="AudioEffectAmplify" id="AudioEffectAmplify_etxt1"]
+resource_name = "Amplify"
+volume_db = -3.0
+
+[sub_resource type="AudioEffectReverb" id="AudioEffectReverb_rae5o"]
+resource_name = "Reverb"
+predelay_feedback = 0.34
+room_size = 0.7
+damping = 0.6
+hipass = 0.03
+wet = 0.0
+
+[sub_resource type="AudioEffectReverb" id="AudioEffectReverb_p7fp8"]
+resource_name = "Reverb"
+room_size = 0.74
+damping = 0.53
+wet = 0.47
+
+[sub_resource type="AudioEffectCompressor" id="AudioEffectCompressor_2ifye"]
+resource_name = "Compressor"
+threshold = -2.0
+release_ms = 150.0
+
+[sub_resource type="AudioEffectAmplify" id="AudioEffectAmplify_ujdup"]
+resource_name = "Amplify"
+volume_db = -3.0
+
+[resource]
+bus/0/volume_db = -3.11736
+bus/0/effect/0/effect = SubResource("AudioEffectLimiter_3cws8")
+bus/0/effect/0/enabled = true
+bus/1/name = &"Music"
+bus/1/solo = false
+bus/1/mute = false
+bus/1/bypass_fx = false
+bus/1/volume_db = 0.0
+bus/1/send = &"Master"
+bus/1/effect/0/effect = SubResource("AudioEffectEQ_cr0i0")
+bus/1/effect/0/enabled = true
+bus/1/effect/1/effect = SubResource("AudioEffectAmplify_gt3nx")
+bus/1/effect/1/enabled = true
+bus/2/name = &"SFX"
+bus/2/solo = false
+bus/2/mute = false
+bus/2/bypass_fx = false
+bus/2/volume_db = 0.0
+bus/2/send = &"Master"
+bus/2/effect/0/effect = SubResource("AudioEffectCompressor_mbo36")
+bus/2/effect/0/enabled = false
+bus/2/effect/1/effect = SubResource("AudioEffectAmplify_etxt1")
+bus/2/effect/1/enabled = true
+bus/3/name = &"Diegetic"
+bus/3/solo = false
+bus/3/mute = false
+bus/3/bypass_fx = false
+bus/3/volume_db = -1.12151
+bus/3/send = &"SFX"
+bus/3/effect/0/effect = SubResource("AudioEffectReverb_rae5o")
+bus/3/effect/0/enabled = true
+bus/4/name = &"UI"
+bus/4/solo = false
+bus/4/mute = false
+bus/4/bypass_fx = false
+bus/4/volume_db = 0.0
+bus/4/send = &"SFX"
+bus/5/name = &"Announcer"
+bus/5/solo = false
+bus/5/mute = false
+bus/5/bypass_fx = false
+bus/5/volume_db = 0.0
+bus/5/send = &"Master"
+bus/5/effect/0/effect = SubResource("AudioEffectReverb_p7fp8")
+bus/5/effect/0/enabled = true
+bus/5/effect/1/effect = SubResource("AudioEffectCompressor_2ifye")
+bus/5/effect/1/enabled = true
+bus/5/effect/2/effect = SubResource("AudioEffectAmplify_ujdup")
+bus/5/effect/2/enabled = true
