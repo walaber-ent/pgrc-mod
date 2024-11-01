@@ -9,16 +9,16 @@ PGRC attempts to recreate many of the visual limitations (and resulting stylisti
 In this method, lighting is calculated in real-time casting realistic shadows from 1 or more light sources.  This is great because it's dynamic: you can move the light source and everything updates immediately!  Requires a lot of CPU and GPU processing power.
 
 ### Recent History: Lightmaps
-In this method, lighting is pre-calculated ahead of time using a tool, which calculates very high quality shadows and shading, but is not dynamic.  This is achieved with "lightmaps" which are special textures that contain the lighting information for the scene.  Objects are rendered with their normal textures + mixed with these special lighting textures.  Takes almost no CPU or GPU processing power, but uses a lot of memeory for the (comapritively) high resolution lightmap textures.
+In this method, lighting is pre-calculated ahead of time using a tool, which calculates very high quality shadows and shading, but is not dynamic.  This is achieved with "lightmaps" which are special textures that contain the lighting information for the scene.  Objects are rendered with their normal textures + mixed with these special lighting textures.  Takes almost no CPU or GPU processing power, but uses a lot of memeory for the (comparitively) high resolution lightmap textures.
 
 ### Ancient History: Vertex Colors
-Now we find ourself in the Sega Saturn age.  We don't have enough CPU or GPU power to do realtime shadow calculations for an entire scene, and we don't have enough (texture) memory to store lightmaps.  However, each vertex in our 3D environment can store a color in addition to texture coordinates!  The colors are also blended between each vertex across the face (triangle / quad) that they share with their neighboring vertices.  Using this, we can mix the color from the main texture with the vertex colors to get some change in lighting across the scene!
+Now we find ourself in the Sega Saturn age.  We don't have enough CPU or GPU power to do realtime shadow calculations for an entire scene, and we don't have enough memory to store lightmaps.  However, each vertex in our 3D environment can store a color in addition to texture coordinates!  The colors are also blended between each vertex across the face (triangle / quad) that they share with their neighboring vertices.  Using this, we can mix the color from the main texture with the vertex colors to get some change in lighting across the scene!
 
 This is the technique that PGRC uses for all of its built-in tracks.
 
 ### Setting up and mainpulating Vertex Colors in Blender
 
-Here is an example of a single "tile" of parking garage environment from the game.  It's an 8m x 8m square, sibdivided twice, so each "quad" in the model is a 2 meter x 2 meter square:
+Here is an example of a single "tile" of parking garage environment from the game.  It's an 8m x 8m square, subdivided twice, so each "quad" in the model is a 2 meter x 2 meter square:
 
 ![base mesh](../../../assets/images/vert-lighting-base-mesh.jpg)
 
@@ -27,6 +27,8 @@ Often a portion of the overall texture for the garage is applied to this mesh, l
 ![base mesh textured](../../../assets/images/vert-lighting-base-mesh-textured.jpg)
 
 In blender, we can give a mesh vertex colors (just like the good old days!) pretty easily.  Select your object, and open the Mesh tab and expand the **Color Attributes** section.  Press the [+] button to create a new color attribute.  Set the domain to "vertex" and click OK.  Now your mesh has vertex colors!
+
+![vertex attributes](../../../assets/images/vert-lighting-blender-vert-colors.jpg)
 
 You can switch Blender into **vertex paint** mode to visualize and directly modify/paint vertex colors.  At the start the colors will probably be black.  You can set the tool color to white, and then use Paint > Set Vertex Colors to set all of the vertices of the mesh to white.
 
@@ -85,7 +87,11 @@ You can also enchance it a bit by incorporating some Ambient Occlusion.  The sim
 
 ![ao shading settings](../../../assets/images/vert-lighting-ao-shading.jpg)
 
-When Blender bakes the lighting, it will take into account the color of the material on the object, and the influence of the lights in the scene to calculate the final color that gets assigned to each vertex.  If you just want simple lighting, you want your material to simply be white, so that only the lighting information is baked (not the colors from your textures for example).  This example changes our material to be darker in the corners (ambient occlusion).  When we bake with the material set this way, you can see that corners are a bit darker and more realistic looking (you can see the in-game shader settings here as well for reference):
+When Blender bakes the lighting, it will take into account the color of the material on the object, and the influence of the lights in the scene to calculate the final color that gets assigned to each vertex.  If you just want simple lighting, you want your material to simply be white, so that only the lighting information is baked (not the colors from your textures for example).  This example changes our material to be darker in the corners (ambient occlusion).
+
+![baked with ambient occlusion](../../../assets/images/vert-lighting-ao-bake.jpg)
+
+When we bake with the material set this way, you can see that corners are a bit darker and more realistic looking.  Below is how this model can look in-game (you can see the in-game shader settings here as well for reference):
 
 ![ao bake in game](../../../assets/images/vert-lighting-baked-in-game.jpg)
 
