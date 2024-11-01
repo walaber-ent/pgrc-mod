@@ -320,7 +320,7 @@ Then select your platform of choice (if unsure, choose "Windows") and click **"E
 
 ![Export Dialog](../assets/images/export-dialog.jpg)
 
- Make sure to save your mod with a file name that matches your mod name (remember when you [renamed the folder](#renaming-folders-important) at the beginning of this process?).  For example if your mod name is `cool_mod`, then you should save the file as `cool_mod.pck` or `cool_mod.zip`.
+ Make sure to save your mod with a file name that matches your mod name (remember when you [renamed the folder](#renaming-folders-important) at the beginning of this process?).  For example if your mod name is `cool_mod`, then you should save the file as `cool_mod.pck`. (zip format is not supported at this time)
 
 Finally, it's time to test your track in the game!  At the moment, this involves two steps:
 1. Copy the mod file into the correct folder where you have PGRC installed.
@@ -370,6 +370,11 @@ mods=[
 ```
 
 paste this content into a text editor (such as Notepad), and replace `YOUR_MOD_NAME` with your mod name (should match the filename of your mod), and replace `YOUR_TRACK_NAME` with your track name (should match the name you used in the folder for your track in the project). Note that you don't need to include file extensions here, so if you saved your mod as `cool_mod.pck` it would look like `"file":"cool_mod"`.
+
+### Careful!
+It's critical that the "file" entries in the `mods.cfg` match the folder names inside your mod project.  If they don't match up, the track won't load! See the image below for more context.
+
+![Folder name matching](../assets/images/folder_file_matching.jpg)
 
 OK, try running PGRC and see if your track works! If the track doesn't appear, or the game crashes, you will want to check the game's log file to look for some output that hints at what is wrong. You can find the log files for the game in your save data location, in a sub-folder called `logs`. The `godot.log` is always the most recent log from the last time you played the game. Previous logs will also be in this folder, with a timestamp in the filename to help you realize which one you want to check. The game tries to log errors and warnings when it encounters errors with mod tracks, and checking the log is the best way to debug what is going on!
 
