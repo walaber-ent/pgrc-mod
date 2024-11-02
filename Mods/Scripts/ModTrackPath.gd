@@ -73,7 +73,8 @@ func refresh_mesh() -> void:
 	for i in range(pt_count):
 		var pt_t : Transform3D = _curve.sample_baked_with_rotation(d, false, false)
 		var pt : Vector3 = pt_t.origin
-		var right : Vector3 = pt_t.basis * Vector3.RIGHT
+		var direction : Vector3 = (_curve.sample_baked(d + final_spacing) - pt).normalized()
+		var right : Vector3 = direction.cross(Vector3.UP) #pt_t.basis * Vector3.RIGHT
 		right.y = 0.0
 		right = right.normalized()
 		
