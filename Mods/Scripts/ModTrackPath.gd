@@ -35,6 +35,9 @@ func get_track_curve() -> Curve3D:
 
 
 func refresh_mesh() -> void:
+	if get_child_count() == 0:
+		return
+		
 	if _mesh == null:
 		_mesh = ImmediateMesh.new()
 		mesh = _mesh
