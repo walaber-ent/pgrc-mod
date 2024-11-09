@@ -225,4 +225,8 @@ surface_material_override/0 = ExtResource("17_svsgk")
 [node name="IntroCamera" parent="." instance=ExtResource("18_i6lae")]
 unique_name_in_owner = true
 
+[node name="cam" parent="IntroCamera" index="2"]
+transform = Transform3D(0.76223, -0.210597, 0.61209, 0, 0.945596, 0.325344, -0.647306, -0.247987, 0.720762, 16.7955, 11.5806, 14.9923)
+
 [editable path="sample_track"]
+[editable path="IntroCamera"]
