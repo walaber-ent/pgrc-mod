@@ -18,6 +18,7 @@ A Parking Garage Rally Circuit track consists of several parts. Each section bel
 * [Setting up out-of-bounds areas](#oob)
 * [Setting up reverb areas](#reverb)
 * [Setting up broadcast cameras for replays](#cameras)
+* [Setting up the track intro camera](#intro-camera)
 * [Setting lap counts](#lap_counts)
 * [Track skybox](#skybox)
 * [Track music](#music)
@@ -271,6 +272,29 @@ The order of the nodes is important, they should be in order of proceeding aroun
 
 ### Previewing the track cameras
 It can be a bit confusing to know what all those parameters do, so there is a built-in way to preview the cameras in the template project. Select the "TrackCameraPreviewer" Node and look at the Inspector. There is a parameter called "Preview Car Interp" with a little slider. Drag the slider, and a dark preview car will animate around your track path.  As it animates, a red wireframe preview will update showing which camera is active, and how it will frame the action.
+
+
+## <a name="intro-camera"></a>Setting up the track intro camera
+You can adjust the camera fly-through that happens at the beginning of the race.  Locate the `IntroCamera` node.  You should be able to expand it and see it's child nodes, including `CameraPath`, `LookPath`, `cam` etc.
+
+![IntroCamera heirarchy](../assets/images/intro-cam-heirarchy.jpg)
+
+If you don't see these or can't expand it, right-click on the `IntroCamera` node and select **"Editable Children"**.
+
+The `CameraPath` and `LookPath` are two Path3D nodes useful for making a curved path in the scene.  During the intro sequence, the Camera will animate along the `CameraPath`, and its look target (where it will focus / look at) will animate along the `LookPath`.  You can edit these paths however you like.  It's a good idea to have the `CameraPath` end somewhat close to the Car Spawn position, because after animating along the path, the camera will transition to the in-game view before the game starts.  
+
+### Previewing the intro camera animation
+![Intro Camera Previewer](../assets/images/intro-cam-preview.jpg)
+
+You can preview the intro camera animation in a method similar to previewing the track cameras.  Select the `IntroCamera` node and check the Inspector. There is a **"Preview Interp"** slider.  Drag it and you will see the Camera animate along the path.  Also on this node are 2 curves: **"Camera Anim Curve"** and **"Camera Look Curve"**.  These control the easing of the camera and its look target during the animation.  You can adjust these for fine control over the pacing.
+
+In order to preview the animation, you can also change the Scene view to show the intro camera's viewpoint.  Select the `cam` child node of `Intro Camera`.  Because this is a Camera3D node, in the Scene view you will see a new toggle marked **"Preview"**.  
+
+![Camera Preview](../assets/images/intro-cam-preview-toggle.jpg)
+
+Toggle it and the scene view will now be from the camera's perspective.  After doing this, select the `IntroCamera` node, and drag the Preview Interp slider to preview the animation.
+
+![Intro Camera POV](../assets/images/intro-cam-pov.jpg)
 
 ## <a name="lap_counts"></a> Setting lap counts
 Select the "RaceSettings" special node in the Scene tab and look at the Inspector. There is a **Per Car Class Settings** parameter which is an array. Click to expand the array, there should be 4 "ModCarClassSetting" entries in the Array. Expand these as well.  As you can see, you can set the number of laps for a race for each car class individually. You can change the lap count for each car class here. Note that all of the cheat-code cars share the same internal "car class" name of "cheat".
