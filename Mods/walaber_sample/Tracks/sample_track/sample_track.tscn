@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=3 uid="uid://b2n4oo04jux0t"]
+[gd_scene load_steps=27 format=3 uid="uid://b2n4oo04jux0t"]
 
 [ext_resource type="Script" path="res://Mods/Scripts/ModTrack.gd" id="1_seqqr"]
 [ext_resource type="PackedScene" uid="uid://c7d7wtb3lm6hn" path="res://Mods/Placeholders/mod_car_spawn.tscn" id="2_05dne"]
@@ -17,6 +17,7 @@
 [ext_resource type="PackedScene" uid="uid://dqqrq7ntnw2j8" path="res://Mods/Placeholders/mod_track_camera_previewer.tscn" id="13_fxgoo"]
 [ext_resource type="PackedScene" uid="uid://dp7e7e4jrfb5o" path="res://Mods/walaber_sample/Tracks/sample_track/sample_track.glb" id="14_38t6q"]
 [ext_resource type="Material" uid="uid://3g3wmcrspnk4" path="res://Mods/walaber_sample/Tracks/sample_track/sample_track_diffuse.tres" id="17_svsgk"]
+[ext_resource type="PackedScene" uid="uid://nu27gmyay3un" path="res://Mods/Placeholders/mod_intro_camera.tscn" id="18_i6lae"]
 
 [sub_resource type="Resource" id="Resource_5y32m"]
 script = ExtResource("3_2napl")
@@ -38,15 +39,15 @@ script = ExtResource("3_2napl")
 car_class = "cheat"
 laps = 2
 
-[sub_resource type="ImmediateMesh" id="ImmediateMesh_3i2ap"]
+[sub_resource type="ImmediateMesh" id="ImmediateMesh_08yuj"]
 
-[sub_resource type="BoxMesh" id="BoxMesh_p6cuw"]
+[sub_resource type="BoxMesh" id="BoxMesh_p7jdd"]
 size = Vector3(150, 2, 150)
 
-[sub_resource type="BoxMesh" id="BoxMesh_uv0gt"]
+[sub_resource type="BoxMesh" id="BoxMesh_4n16q"]
 size = Vector3(50, 10, 5)
 
-[sub_resource type="BoxMesh" id="BoxMesh_tleru"]
+[sub_resource type="BoxMesh" id="BoxMesh_h3aks"]
 size = Vector3(8, 8, 8)
 
 [node name="TrackWalaberTest" type="Node3D"]
@@ -75,7 +76,7 @@ size = Vector2(6, 5)
 [node name="TrackPath" type="MeshInstance3D" parent="."]
 unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.14903, 0)
-mesh = SubResource("ImmediateMesh_3i2ap")
+mesh = SubResource("ImmediateMesh_08yuj")
 script = ExtResource("4_h316e")
 material = ExtResource("5_6qukl")
 bezier_handle_length = 2.5
@@ -149,12 +150,12 @@ unique_name_in_owner = true
 
 [node name="trigger" parent="OutOfBounds" instance=ExtResource("8_nfmkb")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -3, 0)
-mesh = SubResource("BoxMesh_p6cuw")
+mesh = SubResource("BoxMesh_p7jdd")
 size = Vector3(150, 2, 150)
 
 [node name="trigger2" parent="OutOfBounds" instance=ExtResource("8_nfmkb")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, -16)
-mesh = SubResource("BoxMesh_uv0gt")
+mesh = SubResource("BoxMesh_4n16q")
 size = Vector3(50, 10, 5)
 
 [node name="ReverbTrigger" type="Node3D" parent="."]
@@ -163,7 +164,7 @@ script = ExtResource("10_nn3ty")
 reverb_strength = 0.8
 
 [node name="trigger" parent="ReverbTrigger" instance=ExtResource("8_nfmkb")]
-mesh = SubResource("BoxMesh_tleru")
+mesh = SubResource("BoxMesh_h3aks")
 size = Vector3(8, 8, 8)
 
 [node name="TrackCameras" type="Node3D" parent="."]
@@ -220,5 +221,8 @@ surface_material_override/0 = ExtResource("17_svsgk")
 
 [node name="Cube_008" parent="sample_track" index="8"]
 surface_material_override/0 = ExtResource("17_svsgk")
+
+[node name="IntroCamera" parent="." instance=ExtResource("18_i6lae")]
+unique_name_in_owner = true
 
 [editable path="sample_track"]
