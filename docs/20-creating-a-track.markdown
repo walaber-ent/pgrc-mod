@@ -6,6 +6,7 @@ permalink: /track/
 
 A Parking Garage Rally Circuit track consists of several parts. Each section below covers a specific element of a track in detail.
 * [Getting started](#getting_started)
+* [Filling out info.cfg](#info)
 * [Heirarchy of a track scene](#heirarchy)
 * [Creating the track environment / geometry](#track_model)
 * [Setting up collision geometry](#colliders)
@@ -70,9 +71,11 @@ As you can see, the template project comes with 1 example track, called "sample_
 
 ✅**Rename the "sample_track" folder to the name of your track.**
 
-The mod system also expects that the mod "scene" (the actual godot file that contains your entire track) will also have the same name as it's folder, with a file extension of ".tscn".
+The mod system also expects that the mod "scene" (the actual godot file that contains your entire track) will also have the same name as it's folder, with a file extension of ".tscn".  It also expects a thumbnail scene (the preview of the track shown in the track select menu in-game) with the same name as the track folder, with "_thumbnail.tscn" appended to the end.
 
 ✅**Rename the sample_track.tscn" file to the name of your track.**
+
+✅**Rename the sample_track_thumbnail.tscn file to the name of your track (keep the _thumbnail part).**
 
 you are now ready to start making your track! It's a good practice to put any new assets for your track into the same folder as your track (such as 3D models, textures, materials, scripts, etc). You can make sub-folders inside your track folder if you want to keep things organized. You can see that the sample track has 2 additional files in the track folder:
 
@@ -80,6 +83,25 @@ you are now ready to start making your track! It's a good practice to put any ne
 
 * **sample_track.glb** this is a 3D model with the main track geometry
 * **sample_track_diffuse** this is a Godot material which is used on the track geometry
+
+## <a name="info"></a>Filling out info.cfg
+PGRC relies on your mod containing a file names `info.cfg` in the root of the mod project.  This file contains some important information about the mod.
+
+Find `info.cfg` in the FileSystem tab, and double-click it to open it in the code editor.  If you don't have an `info.cfg` file in your project, you can create one.  Right-click on `res://` in the FileSystem tab, and select **"Create New..."** and then **"Text File"**, and make sure to name it `info.cfg`.
+
+![Info.cfg location](../assets/images/info-cfg-location.jpg)
+
+Here is a look at the contents of the `info.cfg` file:
+
+![Info.cfg details](../assets/images/info-cfg-details.jpg)
+
+Make sure that the `track_file` entry matches the track folder name you chose in the previous step.  To be super clear, to make sure your track loads properly:
+
+- You have chosen a unique name for your mod, and renamed the main folder to match.
+- You have chosen a name for your track, and renamed the track folder to match.
+- You have renamed the main .tscn and the _thumbnail.tscn files to match your track folder name.
+
+![Naming overview](../assets/images/matching-names.jpg)
 
 
 ## <a name="heirarchy"></a> Heirarchy of a track scene (required elements)
@@ -330,11 +352,22 @@ By selecting **"Custom Music"**, you can provide your own music file! Add an .og
 
 
 ## <a name="track_preview"></a>Track preview
-*(to be added in the future, a method for making a little preview scene of your track to appear in the track select UI in-game)*
+As mentioned in the [Getting Started](#getting-started) section, your track is a Godot "scene" file with the same filename as your track name, for example `my_track.tscn`.  If you want to make a custom thumbnail for your track (a little preview diorama of the track that appears in the track select screen in-game), you can also make an associated "thumbnail" scene. 
+In the template project you can see that a thumbnail scene exists as an example.  This scene is very simple, it is just a simple 3D model (of your choosing).  When you open the scene you will notice an object in the scene called `Bounds (Will Be Hidden)`.  This object helps you know how big to make your thumbnail scene so that it will be sized properly in-game.  The bounds cylinder is hidden when the thumbnail is loaded, so you can leave it in the scene, and also leave it visible and not worry about it disrupting your scene in-game.
+
+The template thumbnail scene looks like this:
+
+![Thumbnail Scene in editor](../assets/images/thumbnail-scene.jpg)
+
+And in-game it looks like this:
+
+![Thumbnail Scene in-game](../assets/images/thumbnail-scene-in-game.jpg)
+
+**Note:** if you don't want a thumbnail scene, you can safely delete it from your project.  If the thumbnail scene is missing, a placeholder scene will be used in-game.
 
 
 ## <a name="exporting_and_testing"></a>Exporting and Testing
-In order to test your track, you need to export your project into a Godot "pck" or "zip" file format.
+In order to test your track, you need to export your project into a Godot "zip" file format. **(Note: .pck format is not supported!)**
 
 From the **Project** menu, select **Export...**
 
@@ -344,11 +377,9 @@ Then select your platform of choice (if unsure, choose "Windows") and click **"E
 
 ![Export Dialog](../assets/images/export-dialog.jpg)
 
- Make sure to save your mod with a file name that matches your mod name (remember when you [renamed the folder](#renaming-folders-important) at the beginning of this process?).  For example if your mod name is `cool_mod`, then you should save the file as `cool_mod.pck`. (zip format is not supported at this time)
+ Make sure to save your mod with a file name that matches your mod name (remember when you [renamed the folder](#renaming-folders-important) at the beginning of this process?).  For example if your mod name is `cool_mod`, then you should save the file as `cool_mod.zip`. (pck format is not supported)
 
-Finally, it's time to test your track in the game!  At the moment, this involves two steps:
-1. Copy the mod file into the correct folder where you have PGRC installed.
-2. Create or update the "mods.cfg" file in your save game folder for PGRC to notify the game about your mod.
+Finally, it's time to test your track in the game! This involves copying the mod file into the correct folder where you have PGRC installed.
 
 ### Copying the file into the correct folder
 You will need to place your mod file into a specific folder where the game is installed on your PC. To find the game's installed location, find PGRC in your steam library, right-click it, and choose **Manage** and then **Browse Local Files**.
@@ -360,45 +391,6 @@ Navigate into the `win` or `linux` folder (depending on your platform), and you 
 ![Mods Folder Example](../assets/images/mod-folder-example.jpg)
 
 Place your mod file inside this `Mods` folder.
-
-### Updating the "mods.cfg" file
-
-Finally, the game needs to know your mod exists! This might be improved in the future to be automated, but for now the game relies on a `mods.cfg` file in your save data location to know what mods to load when the game starts up.
-
-You can find your save data location in the following location on your computer:
-
-| Platform | Location |
-| -------- | -------- |
-| Windows | `%Appdata%\ParkingGarageRallyCircuit` |
-| Linux | `~/.local/share/ParkingGarageRallyCircuit` |
-
-There should be a bunch of files in this folder that constitute your save data, including your ghost data, settings, etc.  
-
-If you don't already have a `mods.cfg` file in this folder, you need to create one.  The content of the file should look like this:
-
-```
-[mods]
-mods=[
-    {
-        "name":"Display Name For Your Mod",
-        "file":"YOUR_MOD_NAME",
-        "load":true,
-        "tracks":[
-            {
-                "name":"Display Name For Your Track",
-                "file":"YOUR_TRACK_NAME"
-            }
-        ]
-    }
-]
-```
-
-paste this content into a text editor (such as Notepad), and replace `YOUR_MOD_NAME` with your mod name (should match the filename of your mod), and replace `YOUR_TRACK_NAME` with your track name (should match the name you used in the folder for your track in the project). Note that you don't need to include file extensions here, so if you saved your mod as `cool_mod.pck` it would look like `"file":"cool_mod"`.
-
-### Careful!
-It's critical that the "file" entries in the `mods.cfg` match the folder names inside your mod project.  If they don't match up, the track won't load! See the image below for more context.
-
-![Folder name matching](../assets/images/folder_file_matching.jpg)
 
 OK, try running PGRC and see if your track works! If the track doesn't appear, or the game crashes, you will want to check the game's log file to look for some output that hints at what is wrong. You can find the log files for the game in your save data location, in a sub-folder called `logs`. The `godot.log` is always the most recent log from the last time you played the game. Previous logs will also be in this folder, with a timestamp in the filename to help you realize which one you want to check. The game tries to log errors and warnings when it encounters errors with mod tracks, and checking the log is the best way to debug what is going on!
 
