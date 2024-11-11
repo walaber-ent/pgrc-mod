@@ -10,3 +10,4 @@ class_name ModTrack
 @onready var spectator_cars: Node3D = %SpectatorCars
 @onready var track_cameras: Node3D = %TrackCameras
 @onready var track_camera_previewer: ModTrackCameraPreviewer = %TrackCameraPreviewer
+@onready var intro_camera: ModTrackIntroCamera = %IntroCamera
