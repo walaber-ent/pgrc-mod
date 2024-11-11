@@ -25,6 +25,7 @@ A Parking Garage Rally Circuit track consists of several parts. Each section bel
 * [Track music](#music)
 * [Track preview](#track_preview)
 * [Exporting and testing](#exporting_and_testing)
+* [Troubleshooting](#troubleshooting)
 
 
 ## <a name="getting_started"></a> Getting Started
@@ -396,3 +397,12 @@ OK, try running PGRC and see if your track works! If the track doesn't appear, o
 
 ### Congratulations and THANK YOU! 🤩
 If you made it this far, YOU ARE AMAZING! I can't wait to see what you create! If you haven't already, consider [joining the Walaber discord](https://discord.gg/walaber) and sharing your creation with other players!
+
+## <a name="troubleshooting"></a>Troubleshooting
+**I have an `info.cfg` file in my project, but when I try to load my mod the log complains there is no `info.cfg` file!**
+
+By default, Godot won't include all file types into the exported project (including .cfg files).  You need to ensure that Godot includes the `info.cfg` file into your export.  Do this by choosing **Project** > **Export...**, select your platform (usually Windows) and then select the **Resources** tab.  In the "Filters to export non-resource files/folders" box, add `info.cfg` to make sure it's included in the export:
+
+![info.cfg resource exception](../assets/images/info-cfg-resource-exception.jpg)
+
+Note: the template project has been updated with this set by default, but older mad projects created before this change will have to make this change manually.
