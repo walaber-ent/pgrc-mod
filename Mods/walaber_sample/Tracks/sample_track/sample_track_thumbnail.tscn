@@ -1,0 +1,49 @@
+[gd_scene load_steps=9 format=3 uid="uid://debj0mn5tcivu"]
+
+[ext_resource type="Script" path="res://Mods/Scripts/ModTrackThumbnail.gd" id="1_xhvmg"]
+[ext_resource type="PackedScene" uid="uid://dp7e7e4jrfb5o" path="res://Mods/walaber_sample/Tracks/sample_track/sample_track.glb" id="2_j151g"]
+[ext_resource type="PackedScene" uid="uid://cxmqh8d5hw8m" path="res://Mods/Placeholders/Models/arrow-barrier-one-way.glb" id="3_f36xi"]
+[ext_resource type="PackedScene" uid="uid://kxc8kppnmhm2" path="res://Mods/Placeholders/Models/railing-barrier-banner-1.glb" id="4_8wvfm"]
+[ext_resource type="Material" uid="uid://bo2vvto7t361q" path="res://Mods/Placeholders/Materials/in_game_arrow.tres" id="4_e4vuy"]
+[ext_resource type="Material" uid="uid://cvrh20yk4m01m" path="res://Mods/Placeholders/Materials/railing_barrier.tres" id="6_jbses"]
+[ext_resource type="Material" uid="uid://boyhochl2y5wg" path="res://Mods/Placeholders/Materials/in_game_barrier_banners.tres" id="7_lcyc1"]
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_uum8v"]
+flip_faces = true
+top_radius = 12.5
+bottom_radius = 12.5
+height = 5.0
+
+[node name="sample_track_thumbnail" type="Node3D"]
+script = ExtResource("1_xhvmg")
+
+[node name="Bounds (Will Be Hidden)" type="MeshInstance3D" parent="."]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
+mesh = SubResource("CylinderMesh_uum8v")
+
+[node name="sample_track" parent="." instance=ExtResource("2_j151g")]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, -3.6, 0.3, -3.6)
+
+[node name="arrow-barrier-one-way2" parent="." instance=ExtResource("3_f36xi")]
+transform = Transform3D(-0.45346, 0, -0.210652, 0, 0.5, 0, 0.210652, 0, -0.45346, 2.63938, 0.305109, 2.81253)
+
+[node name="arrow-barrier" parent="arrow-barrier-one-way2" index="0"]
+surface_material_override/0 = ExtResource("4_e4vuy")
+
+[node name="railing-barrier-banner-1" parent="." instance=ExtResource("4_8wvfm")]
+transform = Transform3D(0.25, 0, 0.433013, 0, 0.5, 0, -0.433013, 0, 0.25, 2.25591, 0.305109, -2.58242)
+
+[node name="railing-barrier-nocol" parent="railing-barrier-banner-1" index="0"]
+surface_material_override/0 = ExtResource("6_jbses")
+surface_material_override/1 = ExtResource("7_lcyc1")
+
+[node name="arrow-barrier-one-way3" parent="." instance=ExtResource("3_f36xi")]
+transform = Transform3D(-0.482963, 0, 0.12941, 0, 0.5, 0, -0.12941, 0, -0.482963, -2.4661, 0.305109, 2.9461)
+
+[node name="arrow-barrier" parent="arrow-barrier-one-way3" index="0"]
+surface_material_override/0 = ExtResource("4_e4vuy")
+
+[editable path="arrow-barrier-one-way2"]
+[editable path="railing-barrier-banner-1"]
+[editable path="arrow-barrier-one-way3"]

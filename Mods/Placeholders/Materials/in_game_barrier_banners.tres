@@ -1,0 +1,28 @@
+[gd_resource type="ShaderMaterial" load_steps=3 format=3 uid="uid://boyhochl2y5wg"]
+
+[ext_resource type="Shader" path="res://Shaders/saturn_lit.gdshader" id="1_panhs"]
+[ext_resource type="Texture2D" uid="uid://bggbc6k33scij" path="res://Mods/Placeholders/Textures/banners.png" id="2_dgbhy"]
+
+[resource]
+render_priority = 0
+shader = ExtResource("1_panhs")
+shader_parameter/affine_mapping = true
+shader_parameter/affine_effect_reduction = 1.0
+shader_parameter/albedo_color = Color(1, 1, 1, 1)
+shader_parameter/alpha_scissor = 0.5
+shader_parameter/jitter = 0.4
+shader_parameter/resolution = Vector2i(320, 240)
+shader_parameter/uv_min = Vector2(-999, -999)
+shader_parameter/uv_max = Vector2(999, 999)
+shader_parameter/vert_color_gamma = 1.0
+shader_parameter/vert_color_mult = 1.0
+shader_parameter/vert_color_gain = 0.0
+shader_parameter/vert_color_factor = 1.0
+shader_parameter/vert_color_range = 64
+shader_parameter/cull_bias = 0.0
+shader_parameter/cull_near_far = 0.0
+shader_parameter/cull_pop_factor = 0.0
+shader_parameter/dir_light_contrib_range = Vector2(0.3, 1)
+shader_parameter/grid_culling = false
+shader_parameter/grid_size = 8.0
+shader_parameter/main_texture = ExtResource("2_dgbhy")

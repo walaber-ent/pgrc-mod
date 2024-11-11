@@ -32,7 +32,7 @@ import_script/path=""
 _subresources={
 "materials": {
 "track_diffuse": {
-"use_external/enabled": false,
+"use_external/enabled": true,
 "use_external/path": "res://Mods/walaber_sample/Tracks/sample_track/sample_track_diffuse.tres"
 }
 }
