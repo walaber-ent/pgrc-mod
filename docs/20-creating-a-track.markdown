@@ -25,6 +25,7 @@ A Parking Garage Rally Circuit track consists of several parts. Each section bel
 * [Track music](#music)
 * [Track preview](#track_preview)
 * [Exporting and testing](#exporting_and_testing)
+* [Gold trophy ghosts](#trophy-ghosts)
 * [Troubleshooting](#troubleshooting)
 
 
@@ -104,6 +105,9 @@ Make sure that the `track_file` entry matches the track folder name you chose in
 
 ![Naming overview](../assets/images/matching-names.jpg)
 
+Also make sure that the `track_version` entry exists and is a valid number (1 is a good default).  If you ever update your track and want to make sure that old best times are ignored and must be reset, you can increment this version number value.  **Note** this is an integer value, not a string (text) value, so it shouldn't have quotes around it.  It should look like this:
+
+![Info.cfg track version](../assets/images/info-cfg-version.jpg)
 
 ## <a name="heirarchy"></a> Heirarchy of a track scene (required elements)
 Here is what the template track scene looks like in the Godot "Scene" panel:
@@ -324,6 +328,8 @@ Select the "RaceSettings" special node in the Scene tab and look at the Inspecto
 
 ![Settings: Laps](../assets/images/settings-laps.jpg)
 
+You can also set the starting time for playing this track in **Endurance mode** here as well.
+
 ## <a name="skybox"></a>Track skybox
 You have 3 options for the "skybox" (background art of the surrounding environment) in your track. Select the "RaceSettings" special node in the Scene tab and look at the Inspector. You will see a drop-down called **"Built In Skybox Style"**.
 
@@ -393,10 +399,37 @@ Navigate into the `win` or `linux` folder (depending on your platform), and you 
 
 Place your mod file inside this `Mods` folder.
 
-OK, try running PGRC and see if your track works! If the track doesn't appear, or the game crashes, you will want to check the game's log file to look for some output that hints at what is wrong. You can find the log files for the game in your save data location, in a sub-folder called `logs`. The `godot.log` is always the most recent log from the last time you played the game. Previous logs will also be in this folder, with a timestamp in the filename to help you realize which one you want to check. The game tries to log errors and warnings when it encounters errors with mod tracks, and checking the log is the best way to debug what is going on!
+OK, try running PGRC and see if your track works! If the track doesn't appear, or the game crashes, you will want to check the game's log file to look for some output that hints at what is wrong. You can find the log files for the game in your save data location:
+
+Save data locations per platform:
+
+| Platform | Save Data Location |
+| ----- | ------------- |
+| Windows | `%AppData%\ParkingGarageRallyCircuit` |
+| Linux | `~/.local/share/ParkingGarageRallyCircuit` |
+| MacOS | `~/Library/Application Support/ParkingGarageRallyCircuit` |
+
+... in a sub-folder called `logs`. The `godot.log` is always the most recent log from the last time you played the game. Previous logs will also be in this folder, with a timestamp in the filename to help you realize which one you want to check. The game tries to log errors and warnings when it encounters errors with mod tracks, and checking the log is the best way to debug what is going on!
 
 ### Congratulations and THANK YOU! 🤩
 If you made it this far, YOU ARE AMAZING! I can't wait to see what you create! If you haven't already, consider [joining the Walaber discord](https://discord.gg/walaber) and sharing your creation with other players!
+
+
+## <a name="trophy-ghosts"></a>Gold Trophy ghosts
+The final touch is to record the "gold trophy" ghosts for your track!  If your track has a gold trophy ghost, it will appear in-game just like the built-in tracks, and players can earn a gold trophy if they beat your ghost.
+
+The first step is easy: play your track with each car class (don't forget to choose a cheat car as well, all cheat cars share the same records, so pick 1 cheat car to be your ghost for this level and use it when you play).  Once you're happy with your best time ghost performances, you will need to copy the data into your mod.
+
+Find your save data folder on your computer (see above for locations).  You should see some files associated with your track.  For the **"sample_track"** that is part of the **"walaber_sample"** mod, the files look like this:
+
+![Trophy Ghost Source Files](../assets/images/trophy-ghost-source-files.jpg)
+
+Copy the 4 ghost files into your mod track folder (the same folder with your main track .tscn file), and rename them into the format **"ghost_[CAR CLASS NAME].dat"**.  Again, for the template track it looks like this:
+
+![Trophy Ghost Copied Files](../assets/images/trophy-ghost-dest-files.jpg)
+
+Now re-export your mod!  In the track select screen you should see the trophy times displayed for each car class.  They will not immediately show up in-game though, because your local best time is equal to or better than the ghost time (since it's a copy of your own best time)... This is the same scenario as a player who has already beaten your trophy ghost!  If you want to actually verify the ghost in-game, you will need to delete the progress for your track from your `records.cfg` file in the game Save Data folder to reset your progress for your track.
+
 
 ## <a name="troubleshooting"></a>Troubleshooting
 **I have an `info.cfg` file in my project, but when I try to load my mod the log complains there is no `info.cfg` file!**
@@ -406,3 +439,7 @@ By default, Godot won't include all file types into the exported project (includ
 ![info.cfg resource exception](../assets/images/info-cfg-resource-exception.jpg)
 
 Note: the template project has been updated with this set by default, but older mad projects created before this change will have to make this change manually.
+
+**I made trophy ghosts but they aren't showing up in-game**
+
+The Godot template project was updated to ensure that `.dat` files would be properly included in the exported mod.  If you started your mod before this update, you might need to manually update your Godot project.  Follow the steps above for the `info.cfg` file, and also add `*.dat` into the Filters to export non-resource files/folders box.
