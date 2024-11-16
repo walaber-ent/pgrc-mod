@@ -1,12 +1,13 @@
-[gd_scene load_steps=9 format=3 uid="uid://debj0mn5tcivu"]
+[gd_scene load_steps=10 format=3 uid="uid://debj0mn5tcivu"]
 
 [ext_resource type="Script" path="res://Mods/Scripts/ModTrackThumbnail.gd" id="1_xhvmg"]
 [ext_resource type="PackedScene" uid="uid://dp7e7e4jrfb5o" path="res://Mods/walaber_sample/Tracks/sample_track/sample_track.glb" id="2_j151g"]
+[ext_resource type="Material" uid="uid://ci0wrahjtap80" path="res://Mods/walaber_sample/Tracks/sample_track/sample_track_diffuse_thumbnail.tres" id="3_60hbk"]
 [ext_resource type="PackedScene" uid="uid://cxmqh8d5hw8m" path="res://Mods/Placeholders/Models/arrow-barrier-one-way.glb" id="3_f36xi"]
 [ext_resource type="PackedScene" uid="uid://kxc8kppnmhm2" path="res://Mods/Placeholders/Models/railing-barrier-banner-1.glb" id="4_8wvfm"]
-[ext_resource type="Material" uid="uid://bo2vvto7t361q" path="res://Mods/Placeholders/Materials/in_game_arrow.tres" id="4_e4vuy"]
+[ext_resource type="Material" uid="uid://bo2vvto7t361q" path="res://Mods/Placeholders/Materials/thumbnail_arrow.tres" id="4_e4vuy"]
 [ext_resource type="Material" uid="uid://cvrh20yk4m01m" path="res://Mods/Placeholders/Materials/railing_barrier.tres" id="6_jbses"]
-[ext_resource type="Material" uid="uid://boyhochl2y5wg" path="res://Mods/Placeholders/Materials/in_game_barrier_banners.tres" id="7_lcyc1"]
+[ext_resource type="Material" uid="uid://boyhochl2y5wg" path="res://Mods/Placeholders/Materials/thumbnail_barrier_banners.tres" id="7_lcyc1"]
 
 [sub_resource type="CylinderMesh" id="CylinderMesh_uum8v"]
 flip_faces = true
@@ -24,6 +25,33 @@ mesh = SubResource("CylinderMesh_uum8v")
 
 [node name="sample_track" parent="." instance=ExtResource("2_j151g")]
 transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, -3.6, 0.3, -3.6)
+
+[node name="Cube" parent="sample_track" index="0"]
+surface_material_override/0 = ExtResource("3_60hbk")
+
+[node name="Cube_001" parent="sample_track" index="1"]
+surface_material_override/0 = ExtResource("3_60hbk")
+
+[node name="Cube_002" parent="sample_track" index="2"]
+surface_material_override/0 = ExtResource("3_60hbk")
+
+[node name="Cube_003" parent="sample_track" index="3"]
+surface_material_override/0 = ExtResource("3_60hbk")
+
+[node name="Cube_004" parent="sample_track" index="4"]
+surface_material_override/0 = ExtResource("3_60hbk")
+
+[node name="Cube_005" parent="sample_track" index="5"]
+surface_material_override/0 = ExtResource("3_60hbk")
+
+[node name="Cube_006" parent="sample_track" index="6"]
+surface_material_override/0 = ExtResource("3_60hbk")
+
+[node name="Cube_007" parent="sample_track" index="7"]
+surface_material_override/0 = ExtResource("3_60hbk")
+
+[node name="Cube_008" parent="sample_track" index="8"]
+surface_material_override/0 = ExtResource("3_60hbk")
 
 [node name="arrow-barrier-one-way2" parent="." instance=ExtResource("3_f36xi")]
 transform = Transform3D(-0.45346, 0, -0.210652, 0, 0.5, 0, 0.210652, 0, -0.45346, 2.63938, 0.305109, 2.81253)
@@ -44,6 +72,7 @@ transform = Transform3D(-0.482963, 0, 0.12941, 0, 0.5, 0, -0.12941, 0, -0.482963
 [node name="arrow-barrier" parent="arrow-barrier-one-way3" index="0"]
 surface_material_override/0 = ExtResource("4_e4vuy")
 
+[editable path="sample_track"]
 [editable path="arrow-barrier-one-way2"]
 [editable path="railing-barrier-banner-1"]
 [editable path="arrow-barrier-one-way3"]

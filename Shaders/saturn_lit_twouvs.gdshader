@@ -8,7 +8,11 @@ render_mode blend_mix,
 uniform bool affine_mapping = true;
 uniform float affine_effect_reduction : hint_range(0,10) = 1.0;
 uniform sampler2D main_texture : source_color, filter_nearest;
+uniform sampler2D second_texture : source_color, filter_nearest, repeat_disable;
 uniform vec4 albedo_color : source_color = vec4(1.0);
+uniform float alpha_scissor : hint_range(0, 1) = 0.5;
+uniform float jitter: hint_range(0, 1) = 0.4;
+uniform ivec2 resolution = ivec2(320, 240);
 uniform vec2 uv_min = vec2(-999.0, -999.0);
 uniform vec2 uv_max = vec2(999.0, 999.0);
 uniform float vert_color_gamma = 1.0;
@@ -29,9 +33,6 @@ uniform vec2 fog_dist_range = vec2(100.0, 200.0);
 uniform vec2 fog_intensity_range = vec2(0.0, 0.4);
 uniform int fog_value_range = 64;
 
-global uniform float JITTER;
-global uniform vec2 JITTER_RESOLUTION;
-
 global uniform vec3 LIGHT_DIR;
 
 global uniform vec2 CULL_DIST_NEAR;
@@ -49,7 +50,7 @@ vec4 snap_to_position(vec4 base_position)
 	vec4 snapped_position = base_position;
 	snapped_position.xyz = base_position.xyz / base_position.w;
 	
-	vec2 snap_resulotion = floor(vec2(JITTER_RESOLUTION) * (1.0 - JITTER));
+	vec2 snap_resulotion = floor(vec2(resolution) * (1.0 - jitter));
 	snapped_position.x = floor(snap_resulotion.x * snapped_position.x) / snap_resulotion.x;
 	snapped_position.y = floor(snap_resulotion.y * snapped_position.y) / snap_resulotion.y;
 	
@@ -97,12 +98,14 @@ void vertex()
 	{
 		cull = 1.0;
 	}
+	
 	fog = 0.0;
 	
 	if (fog_on)
 	{
 		float fog_interp = smoothstep(fog_dist_range.x, fog_dist_range.y, view_dist);
 		fog = mix(fog_intensity_range.x, fog_intensity_range.y, fog_interp);
+		fog = round(fog * float(fog_value_range)) / float(fog_value_range);
 	}
 	
 	COLOR = round(COLOR * float(vert_color_range)) / float(vert_color_range);
@@ -112,22 +115,23 @@ void vertex()
 void fragment()
 {
 	vec2 uv = clamp(UV, uv_min, uv_max);
+	vec2 uv2 = clamp(UV2, uv_min, uv_max);
 	
 	vec4 vert_color = COLOR;
 	vec4 vert_base = vec4((pow(vert_color.rgb, vec3(vert_color_gamma)) * vert_color_mult) + vec3(vert_color_gain), COLOR.a);
 	vec4 texture_color = texture(main_texture, uv);
+	vec4 second_texture_color = texture(second_texture, uv2);
 	
 	ivec2 screen_pixel = ivec2(SCREEN_UV * VIEWPORT_SIZE);
 	
 	float bayer[] = { 0.0, 0.5, 0.75, 0.25 };
-	
 	
 	float original_a = vert_base.a * texture_color.a * albedo_color.a * cull;
 	float bayer_val = bayer[ ((screen_pixel.y % 2) * 2) + (screen_pixel.x % 2) ];
 	
 	float alpha = step(bayer_val, original_a - 0.01);
 	
-	vec4 albedo = texture_color * albedo_color;
+	vec4 albedo = texture_color * albedo_color * second_texture_color;
 	vec4 lit_albedo = vert_base * albedo;
 	lit_albedo = mix(albedo, lit_albedo, vert_color_factor);
 	
@@ -138,5 +142,5 @@ void fragment()
 	
 	ALBEDO = pow(lit_albedo.rgb * l, vec3(OVERALL_GAMMA));
 	ALPHA = alpha;
-	ALPHA_SCISSOR_THRESHOLD = 0.5;
+	ALPHA_SCISSOR_THRESHOLD = alpha_scissor;
 }
