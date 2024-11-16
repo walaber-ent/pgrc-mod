@@ -11,6 +11,9 @@ enum BuiltinSkyboxStyle
 	None
 }
 
+@export_category("Endurance")
+@export var endurance_start_seconds : float = 30.0
+
 @export_category("Skybox")
 @export var built_in_skybox_style : BuiltinSkyboxStyle = BuiltinSkyboxStyle.PGRCExisting
 @export var pgrc_skybox_name : String = "tut"

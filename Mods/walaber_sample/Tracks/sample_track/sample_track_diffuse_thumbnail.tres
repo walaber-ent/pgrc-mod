@@ -1,11 +1,11 @@
-[gd_resource type="ShaderMaterial" load_steps=3 format=3 uid="uid://3g3wmcrspnk4"]
+[gd_resource type="ShaderMaterial" load_steps=3 format=3 uid="uid://ci0wrahjtap80"]
 
-[ext_resource type="Shader" path="res://Shaders/saturn_lit.gdshader" id="1_jby1b"]
-[ext_resource type="Texture2D" uid="uid://bi8rlw32d7fxj" path="res://Textures/cement.png" id="2_veqy7"]
+[ext_resource type="Shader" path="res://Shaders/saturn_lit.gdshader" id="1_ceruw"]
+[ext_resource type="Texture2D" uid="uid://bi8rlw32d7fxj" path="res://Textures/cement.png" id="2_rphux"]
 
 [resource]
 render_priority = 0
-shader = ExtResource("1_jby1b")
+shader = ExtResource("1_ceruw")
 shader_parameter/affine_mapping = true
 shader_parameter/affine_effect_reduction = 8.0
 shader_parameter/albedo_color = Color(1, 1, 1, 1)
@@ -16,7 +16,7 @@ shader_parameter/vert_color_mult = 2.545
 shader_parameter/vert_color_gain = 0.045
 shader_parameter/vert_color_factor = 1.0
 shader_parameter/vert_color_range = 64
-shader_parameter/culling_on = true
+shader_parameter/culling_on = false
 shader_parameter/cull_bias = 0.0
 shader_parameter/cull_near_far = 0.0
 shader_parameter/cull_pop_factor = 0.0
@@ -28,4 +28,4 @@ shader_parameter/fog_color = Color(1, 1, 1, 1)
 shader_parameter/fog_dist_range = Vector2(100, 200)
 shader_parameter/fog_intensity_range = Vector2(0, 0.4)
 shader_parameter/fog_value_range = 64
-shader_parameter/main_texture = ExtResource("2_veqy7")
+shader_parameter/main_texture = ExtResource("2_rphux")
