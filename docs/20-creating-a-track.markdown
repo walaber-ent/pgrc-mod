@@ -26,6 +26,7 @@ A Parking Garage Rally Circuit track consists of several parts. Each section bel
 * [Track preview](#track_preview)
 * [Exporting and testing](#exporting_and_testing)
 * [Gold trophy ghosts](#trophy-ghosts)
+* [Uploading to Steam Workshop](#uploading)
 * [Troubleshooting](#troubleshooting)
 
 
@@ -429,6 +430,11 @@ Copy the 4 ghost files into your mod track folder (the same folder with your mai
 ![Trophy Ghost Copied Files](../assets/images/trophy-ghost-dest-files.jpg)
 
 Now re-export your mod!  In the track select screen you should see the trophy times displayed for each car class.  They will not immediately show up in-game though, because your local best time is equal to or better than the ghost time (since it's a copy of your own best time)... This is the same scenario as a player who has already beaten your trophy ghost!  If you want to actually verify the ghost in-game, you will need to delete the progress for your track from your `records.cfg` file in the game Save Data folder to reset your progress for your track.
+
+
+## <a name="uploading"></a>Uploading to Steam Workshop
+When you are done testing locally and ready to share with players around the world, it's time to upload your mod to Steam Workshop!
+There are detailed instructions [here](../overview#uploading-to-workshop)
 
 
 ## <a name="troubleshooting"></a>Troubleshooting
