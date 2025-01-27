@@ -10,6 +10,7 @@ A Parking Garage Rally Circuit track consists of several parts. Each section bel
 * [Heirarchy of a track scene](#heirarchy)
 * [Creating the track environment / geometry](#track_model)
 * [Setting up collision geometry](#colliders)
+* [Applying materials in Godot](#materials)
 * [Sega Saturn" materials and shaders](#saturn_shaders)
 * [Placing the car spawn point](#spawn)
 * [Placing checkpoints](#checkpoints)
@@ -168,6 +169,35 @@ Each CollisionShape3D node has a **shape** property where you can create collide
 ![Godot collider shapes](../assets/images/godot-collider-shape.jpg)
 
 
+## <a name="materials"></a>Applying materials in Godot
+When you import 3D models into Godot, you will likely want to customize the materials on that model, especially if you want to use the PGRC shaders to give your track the "Sega Saturn" look ([see below](#sega-saturn-materials-and-shaders) for info on these)
+
+Let's say you have a 3D model that you found online, or created in a program like Blender.  As an exmaple, let's pretend we have a .gltf model file like this one:
+
+![FileSystem view showing a .gltf model file](../assets/images/model-import-gltf.png)
+
+It comes with the model itself, along with many texture maps.  If you double-click on the .gltf file, an "advanced import window" will pop up that lets you examine the model, and set various settings that affect how it is imported into Godot. 
+
+![Advanced Import Settings Window](../assets/images/model-import-settings.png)
+
+The most relevant feature for PGRC tracks is the ability to set up each material in the model to use a Godot material that you have created.  If you click on the "materials" tab of the import window, You can see a list on the left of all of the materials that the model file expects.
+
+![Using External Materials](../assets/images/model-external-materials.png)
+
+If you select one of these materials, you will see an option on the right called "Use External".  Check this box, and then click the folder icon to browse and select the Godot material asset (a .tres file) that you would like to map to that material in the model.
+
+In this example, I created "Sega Saturn" materials for all of the materials that this model expected (quite a few!), and set them to use external as indicated above.  Before doing this step, the model looked like this in the 3D view:
+
+![Model before mapping materials](../assets/images/model-import-before.png)
+
+... and after mapping the materials it looks like this:
+
+![Model after mapping materials](../assets/images/model-import-after.png)
+
+**NOTE** Although I have focused on examples using the PGRC "Sega Saturn" shaders here (and more below), you don't have to use those shaders.  You can also create materials that are "StandardMaterial3D" resources, which is a highly configurable material type Godot that you can use to create a variety of visual styles easily. [More information here](https://docs.godotengine.org/en/stable/tutorials/3d/standard_material_3d.html)
+
+
+
 ## <a name="saturn_shaders"></a>"Sega Saturn" materials and shaders
 You can use whatever materials, shaders you want in your track!  However, **if you want your level match the "Sega Saturn" look of PGRC** here are a few tips and tricks:
 
@@ -192,6 +222,12 @@ Choose "Shaders/saturn_lit.gdshader" ![Shader Path](../assets/images/shader-file
 The shader has a few parameters that you can adjust:
 
 ![Shader Parameters](../assets/images/shader-parameters.jpg)
+
+### Texture Mapping parameters:
+There is an effect called "affine mapping" which simulates how textures stretched at the edges of the screen and when viewed at oblique angles on older hardware like the Sega Saturn.
+* **Affine Mapping** toggle the texture stretching effect (on by default)
+* **Affine Effect Reduction** increase this value to reduce the amount of texture stretching, lower it for more extreme stretching.
+The affine effect is amplified when you have large triangles/quads in your mesh.  If you mesh has very large quads, you might need to disable Affine Mapping altogether to make it look acceptable in-game (alternatively, you can subdivide the mesh to reduce the stretching artifacts as well, if you have th ability to modify the mesh yourself).
 
 ### Vertex color adjustment parameters:
 all of the environment lighting in PGRC tracks is achieved with **vertex colors**. Essentially each vertex (point) in the 3D model can be assigned a color, and that color can affect how the texture is colored at that spot in the level. This is how all of the lighting and shadows are accomplished in the level. There are several parameters to adjust how the vertex colors are applied in the shader:
@@ -370,6 +406,8 @@ The template thumbnail scene looks like this:
 And in-game it looks like this:
 
 ![Thumbnail Scene in-game](../assets/images/thumbnail-scene-in-game.jpg)
+
+**Note:** Please keep thumbnail scenes SIMPLE!  Large scenes with many meshes or items can lag the track select screen.  Your thumbnail should just be a simple object (like a figure or diorama) that helps remind players which level is which!
 
 **Note:** if you don't want a thumbnail scene, you can safely delete it from your project.  If the thumbnail scene is missing, a placeholder scene will be used in-game.
 
