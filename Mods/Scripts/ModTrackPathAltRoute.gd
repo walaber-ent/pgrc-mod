@@ -1,51 +1,51 @@
 @tool
 
 extends MeshInstance3D
-class_name ModTrackPath
+class_name ModTrackPathAltRoute
 
 @export var material : Material
 
 @export var bezier_handle_length : float = 2.0:
 	set(val):
 		bezier_handle_length = val
-		refresh_mesh()
+		if Engine.is_editor_hint():
+			refresh_mesh()
 		
 @export var track_width : float = 6.0:
 	set(val):
 		track_width = val
-		refresh_mesh()
+		if Engine.is_editor_hint():
+			refresh_mesh()
 		
 @export var vert_spacing : float = 2.0:
 	set(val):
 		vert_spacing = val
-		refresh_mesh()
-		
-@export var race_is_point_to_point : bool = false:
-	set(val):
-		race_is_point_to_point = val
-		refresh_mesh()
+		if Engine.is_editor_hint():
+			refresh_mesh()
 
 var _mesh : ImmediateMesh
 var _curve : Curve3D
 
 func _ready() -> void:
-	refresh_mesh()
+	if Engine.is_editor_hint():
+		refresh_mesh()
 	
 func _notification(what: int) -> void:
 	if what == NOTIFICATION_CHILD_ORDER_CHANGED:
-		refresh_mesh()
+		if Engine.is_editor_hint():
+			refresh_mesh()
 
 func get_track_curve() -> Curve3D:
 	return _curve
 
 
-func refresh_mesh(start_uv:float=0.0, end_uv:float = 1.0) -> void:
+func refresh_mesh(start_uv:float = 0.0, end_uv:float = 1.0, force_new:bool = false) -> void:
 	if get_child_count() == 0:
 		return
-		
+	
 	var uv_range : float = end_uv - start_uv
-		
-	if _mesh == null:
+	
+	if _mesh == null or force_new:
 		_mesh = ImmediateMesh.new()
 		mesh = _mesh
 		
@@ -90,16 +90,6 @@ func refresh_mesh(start_uv:float=0.0, end_uv:float = 1.0) -> void:
 		
 		var uv_x : float = start_uv + ((d / length) * uv_range)
 		
-		# last point special logic
-		if not race_is_point_to_point:
-			if i == pt_count-1:
-				pt_t = _curve.sample_baked_with_rotation(0.0, false, false)
-				pt = pt_t.origin
-				right = pt_t.basis * Vector3.RIGHT
-				right.y = 0.0
-				right = right.normalized()
-				uv_x = 1.0
-			
 		_mesh.surface_set_uv(Vector2(uv_x, 0.0))
 		_mesh.surface_add_vertex(pt + (right * track_width * 0.5))
 		
@@ -109,11 +99,3 @@ func refresh_mesh(start_uv:float=0.0, end_uv:float = 1.0) -> void:
 		d = minf(d + final_spacing, length)
 		
 	_mesh.surface_end()
-		
-		
-		
-	
-	
-	
-	
-	
