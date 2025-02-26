@@ -111,6 +111,12 @@ Also make sure that the `track_version` entry exists and is a valid number (1 is
 
 ![Info.cfg track version](../assets/images/info-cfg-version.jpg)
 
+### What if my mod has multiple tracks?
+
+If you want your mod to have multiple tracks contained inside it, you just need to make an entry for each track in the info.cfg file.  Make a copy of the main content in the "tracks" and fill in the "track_name", "track_file", and "track_version".  Don't forget to add a comma to separate the entries.  Here is an example of what am info.cfg with two tracks might look like:
+
+![Info.cfg with multiple tracks](../assets/images/info-cfg-multiple-tracks.png)
+
 ## <a name="heirarchy"></a> Heirarchy of a track scene (required elements)
 Here is what the template track scene looks like in the Godot "Scene" panel:
 
@@ -167,6 +173,36 @@ You will want to create a **StaticBody3D** node, and then give it 1 or more **Co
 Each CollisionShape3D node has a **shape** property where you can create colliders from various primitive shapes like boxes, spheres, capsules, etc.
 
 ![Godot collider shapes](../assets/images/godot-collider-shape.jpg)
+
+### A Note on Layers
+
+Godot lets you define "layers" that help identify categories of objects in your game, and control what things can collide with each other, what things pass through each other without collision, etc.  PGRC has a bunch of layers already set up that you will need to use in order for things to work properly.
+
+Here is a look at the layers in PGRC:
+
+![Physics layers in PGRC](../assets/images/pgrc-layers.png)
+
+| # | Name | Description |
+| -- | ---- | ----------- |
+| 1 | Ground | Use this for all "normal" objects that you want the car to collide with |
+| 2 | Car | This layer is reserved for the car.  If you want to make a custom Area3D that will react to the car entering, make sure the mask is set to this layer! |
+| 3 | OutOfBounds | This layer is used for Out Of Bounds Area3D triggers |
+| 4 | CarTriggers | This layer is used for other multi-purpose Area3D triggers that react to the cars |
+| 5 | PaintGlob | Unused, was for a prototype game mechanic that was never finished |
+| 6 | Dirt | This is ground, but the traction is a bit different and dirt particles are created when driving on it |
+| 7 | TireRayOnly | Special layer if you want some collision that the tires will collide with, but the car body will not |
+| 8 | Grass | This is ground, but slows down the car and creates grass particles when driving on it |
+| 9 | DeepSnow | This is ground, but has lower traction and created snow particles when driving on it |
+| 10 | LightSnow | This is ground, with different drift particles |
+| 11 | Roof | This is ground, but with a different controller rumble pattern |
+
+Feel free to use these layers in your tracks.  The mod template project has these layers set up, so you can see their names.  Select a physics object, and look at the "Collision" section:
+
+![Collision inspector view](../assets/images/collision-inspector.png)
+
+If you hover the mouse over a box, you can see the name, or click the three dot menu and you can see the layers with their names:
+
+![Collision inspector view with names](../assets/images/collision-inspector-names.png)
 
 
 ## <a name="materials"></a>Applying materials in Godot
