@@ -28,7 +28,16 @@ A Parking Garage Rally Circuit track consists of several parts. Each section bel
 * [Exporting and testing](#exporting_and_testing)
 * [Gold trophy ghosts](#trophy-ghosts)
 * [Uploading to Steam Workshop](#uploading)
+
+# Advanced Topics
+* [Point-to-point tracks](#point-to-point)
+* [Branching paths / checkpoints](#branching-paths)
+* [Skybox triggers](#skybox-triggers)
+
+# Help and Troubleshooting
 * [Troubleshooting](#troubleshooting)
+
+
 
 
 ## <a name="getting_started"></a> Getting Started
@@ -509,6 +518,55 @@ Now re-export your mod!  In the track select screen you should see the trophy ti
 ## <a name="uploading"></a>Uploading to Steam Workshop
 When you are done testing locally and ready to share with players around the world, it's time to upload your mod to Steam Workshop!
 There are detailed instructions [here](../overview#uploading-to-workshop)
+
+
+## <a name="point-to-point"></a>Creating point-to-point tracks
+What's that you say? You want to make a proper **rally** track?  ok fine!  Here are the steps to make a point-to-point track:
+The most important step is to set the number of laps in the [race settings](#setting-lap-counts) to zero (0) to indicate your track has no laps and should end when players cross the final checkpoint.
+
+![Track is Point to Point checkbox](./../assets/images/track-path-is-p2p.png)
+
+You will also want to check the "Race Is Point To Point" checkbox on the TrackPath ([see here](#setting-the-track-path--minimap)) so that the track path doesn't try to form a closed loop (this will also switch the in-game UI mini-map to have the camera follow the car instead of being fixed in the center of the map).
+
+![info.cfg allow_endurance example](./../assets/images/info-cfg-allow-endurance.png)
+
+Finally, endurance mode doesn't really make sense (nor work properly) for point-to-point tracks, so you should probably disable endurance mode for your track as well.  This is a simple setting in the info.cfg file for your mod, in the section for the track, set `allow_endurance=false`
+There are detailed instructions [here](../overview#uploading-to-workshop)
+
+You can see an [example project of a point-to-point track here](https://github.com/walaber-ent/pgrc-underground-lot)
+
+## <a name="branching-paths"></a>Branching paths / checkpoints
+If you want to have branching paths in your track (that include different checkpoints), it's pretty easy!  The overall # of checkpoints in a lap must be consistent, which means that if players take path A or path B, they will utlimately cross the same number of checkpoints.  This restriction keeps things very simple:  when you want to make a branching option, right-click on the "Checkpoints" node in the Scene tab, and choose "+ Add Child Node..." and in the search box type "checkpointset" and select **ModCheckpointSet**. 
+
+![add ModCheckpointSet node](./../assets/images/add-checkpointset-node.png)
+
+This script is an indicator that a checkpoint actually has multiple options. Put as many mod_checkpoint scenes as children of this node.  This will make all children of this node valid checkpoints for that checkpoint in the sequence.  Here is an example from the [official 'underground lot' example track](https://github.com/walaber-ent/pgrc-underground-lot)
+
+![heirarchy example of branching checkpoints](./../assets/images/branching-checkpoints-heirarchy.png)
+
+In the above example, checkpoint 8, 9, and 10 all have 2 options each, where as 7 and 11 are a single checkpoint.
+
+When you create a meaningful branching path, you will probably also want to make the game aware of it so that things like the off-track detection works, and the mini-map can show the path as well.  In order to do this, right-click on the root track node and select "+ Add Child Node..." and in the search box type "pathalt" and select **ModTrackPathAltRoute**.  
+
+![add ModTrackPathAltRoute node](./../assets/images/add-alt-route-node.png)
+
+Similar to the TrackPath node, you can add multiple mod_track_path_point scenes as children and move them around to create the path.  Make sure that the first and last nodes in this alternate path start and end very close to the main track path.  
+
+![example of main path and alt path in the 3D view](./../assets/images/alt-route-in-scene.png)
+
+The game uses proximity to the main path to know when the alternate path starts and ends.
+
+Again, you can see an [example project of a track with branching paths here](https://github.com/walaber-ent/pgrc-underground-lot)
+
+
+## <a name="skybox-triggers"></a>Skybox Triggers
+If your track is large and has multiple areas that look quite different, you may want to change the skybox as the player progresses through the track.  This is particularly valuable for players that have the draw distance set to "Sega Saturn" or "Arcade", which means the geometry in the distance will be culled, and players will see the skybox more often.
+
+For example, for the [official example track 'underground'](https://github.com/walaber-ent/pgrc-underground-lot), the track takes place mostly underground, but has outdoor sections at the beginning and end.  If the skybox was always just an outdoor image, you would be seeing the sky even when you are in the underground sections.  To prevent this, this track makes use of multiple skybox triggers to change the skybox to match the section of track the player is entering.
+
+![skybox trigger setup](./../assets/images/skybox-trigger.png)
+
+To make a skybox trigger: Create a node with a **ModSkyboxTrigger** and then drag in the mod_trigger.tscn as a child.  Place it in the scene and then set the various settings in the Inspector to control the skybox.  The settings are very similar to those for the main [skybox](#track-skybox)
 
 
 ## <a name="troubleshooting"></a>Troubleshooting

@@ -17,7 +17,7 @@ Parking Garage Rally Circuit has some built-in mod support that allows players t
 ## <a name="requirements"></a>Things you need to make a mod
 In order to create your own mod for PGRC, you will need:
 * A copy of the game [purchased on Steam](https://store.steampowered.com/app/2737300/Parking_Garage_Rally_Circuit/)
-* Godot engine 4.2 editor [downloaded on your PC](https://godotengine.org/download/archive/4.2.2-stable/)
+* Godot engine **4.2** editor [downloaded on your PC](https://godotengine.org/download/archive/4.2.2-stable/) **NOTE THE VERSION**, use Godot 4.2, not latest!
 * A way to make or manipulate 3D models such as [Blender](https://www.blender.org/download/)
 * A way to make or manipulate images / textures such as [aseprite](https://www.aseprite.org/)
 
